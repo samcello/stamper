@@ -1,0 +1,28 @@
+/* pages/apply/apply.wxss */
+
+.uploader-image {
+    height: 100rpx;
+    width: 100%;
+}
+.warning-container {
+  color:red;
+  font-size: 14px;
+}
+
+.uploader-text {
+    width: 50%;
+    font-size: 34rpx;
+    color: #007AFF;
+}
+
+.weui-label {
+  font-size: 14px;
+}
+
+.weui-cell__bd {
+  font-size: 14px;
+}
+
+.weui-agree__text {
+  color: red;
+}

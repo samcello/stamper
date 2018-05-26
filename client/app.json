@@ -1,26 +1,20 @@
 {
   "pages":[
-    "pages/apply/apply",
-    "pages/home/home",
-    "pages/index/index"
+    "pages/client/home/home",
+    "pages/client/apply/apply",
+    "pages/admin/home/home",
+    "pages/admin/detail/detail",
+    "pages/admin/submit/submit",
+    "pages/client/submit/submit",
+    "pages/client/start/start",
+    "pages/index/index",
+    "pages/addCgi/addCgi"
   ],
-  "window":{
-    "backgroundColor":"#F6F6F6",
-    "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "在线刻章",
-    "navigationBarTextStyle":"black"
-  },
-  "tabBar": {
-    "list": [
-      {
-        "pagePath": "pages/index/index",
-        "text": "申请记录"
-      },
-      {
-        "pagePath": "pages/apply/apply",
-        "text": "发起印章申请"
-      }
-    ]
+  "window": {
+    "navigationBarBackgroundColor": "#479de6",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "在线印章",
+    "backgroundColor": "#f8f8f8",
+    "backgroundTextStyle": "dark"
   }
 }

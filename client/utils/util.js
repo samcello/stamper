@@ -6,7 +6,7 @@ const formatTime = date => {
   const minute = date.getMinutes()
   const second = date.getSeconds()
 
-  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+  return [year, '年', month, '月', day, '日'].join('') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
 const formatNumber = n => {
@@ -39,4 +39,11 @@ var showModel = (title, content) => {
     })
 }
 
-module.exports = { formatTime, showBusy, showSuccess, showModel }
+var reverse = (object) => {
+  return Object.keys(object).reduce((result, key) => {
+    result[object[key]] = key
+    return result
+  }, {})
+}
+
+module.exports = { formatTime, showBusy, showSuccess, showModel, reverse }

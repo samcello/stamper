@@ -195,7 +195,7 @@ var requestLogin = function requestLogin(options) {
 
         if (res.userinfo) {
           Session.set(res);
-          options.success();
+          options.success(data);
         } else {
           var errorMessage = '登录失败(' + data.error + ')：' + (data.message || '未知错误');
           var noSessionError = new LoginError(constants.ERR_LOGIN_SESSION_NOT_RECEIVED, errorMessage);

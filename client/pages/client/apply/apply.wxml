@@ -1,0 +1,63 @@
+<form bindsubmit="apply" bindreset="formReset">
+<view class="page__bd order-apply-form">
+  <view class="weui-cells" >
+    <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+            <view class="weui-label">企业名称</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" name="companyName" placeholder="请输入企业名称"/>
+        </view>
+    </view>
+    <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+            <view class="weui-label">企业法人</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" name="legalEntity" placeholder="请输入企业法人"/>
+        </view>
+    </view>
+    <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+            <view class="weui-label">信用代码</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" name="creditCode" placeholder="请输入信用代码"/>
+        </view>
+    </view>
+  </view>
+  <view class="weui-cells">
+      <view class="weui-cell weui-cell_switch" wx:for="{{stampAttachments}}" wx:key="value">
+          <view class="weui-cell__bd">{{item.label}}</view>
+          <view class="uploader-text" data-preview-url="{{item.url}}" bindtap="previewImg"  wx:if="{{item.url}}">
+            <text class="weui-cell__bd">查看图片</text>
+          </view>
+          <view class="weui-cell__ft">
+              <icon class="fa fa-camera" data-attach-type="{{item.value}}" bindtap="doUpload"></icon>
+          </view>
+      </view>
+  </view>
+  <label class="weui-agree" for="weuiAgree">
+    <view class="weui-agree__text">
+        注意: 请确保营业执照和法人身份证照片或者扫描件完整并且清楚, 否则会审核失败.
+    </view>
+  </label>
+
+  <view class="weui-cells__title">选择需要刻的章</view>
+  <view class="weui-cells weui-cells_after-title">
+      <checkbox-group bindchange="checkboxChange" name="stampTypes">
+          <label class="weui-cell weui-check__label" wx:for="{{stampTypes}}" wx:key="value">
+              <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+              <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                  <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+                  <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+              </view>
+              <view class="weui-cell__bd">{{item.name}} - ￥{{item.price}}</view>
+          </label>
+      </checkbox-group>
+  </view>
+  <view class="weui-btn-area">
+      <button formType="submit" class="weui-btn" type="primary">下一步</button>
+  </view>
+</view>
+</form>

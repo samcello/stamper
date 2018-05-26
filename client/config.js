@@ -21,7 +21,15 @@ var config = {
         tunnelUrl: `${host}/weapp/tunnel`,
 
         // 上传图片接口
-        uploadUrl: `${host}/weapp/upload`
+        uploadUrl: `${host}/weapp/upload`,
+
+        // 申请印章接口
+        applyUrl: `${host}/weapp/stamper/apply`,
+        //获取印章接口
+        getAllUrl: `${host}/weapp/stampers`,
+        getOrdersUrl: `${host}/weapp/orders`,
+        getOrderUrl: `${host}/weapp/order`,
+        updateOrderUrl: `${host}/weapp/order/update`,
     }
 };
 

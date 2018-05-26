@@ -1,0 +1,20 @@
+.weui-cell__bd {
+  font-size: 14px;
+}
+
+.weui-label {
+  font-size: 14px;
+}
+
+.address-map-maker {
+  font-size: 26px;
+  color: #479de6
+}
+
+.weui-form-preview__label {
+  font-size: 14px;
+}
+
+.weui-form-preview__value_in-hd {
+  font-size: 18px;
+}

@@ -1,0 +1,78 @@
+<form bindsubmit="apply" bindreset="formReset">
+  <view class="page__bd order-apply-form">
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">企业名称</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" name="companyName" value="{{order.companyName}}" placeholder="请输入企业名称" />
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">企业法人</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" name="legalEntity" value="{{order.legalEntity}}" placeholder="请输入企业法人" />
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">信用代码</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" name="creditCode" value="{{order.creditCode}}" placeholder="请输入信用代码" />
+        </view>
+      </view>
+    </view>
+    <view class="weui-cells">
+      <view class="weui-cell weui-cell_switch" wx:for="{{order.stampAttachments}}" wx:key="value" wx:if="{{item.url}}">
+        <view class="weui-cell__bd">{{item.label}}</view>
+        <view class="uploader-text" data-preview-url="{{item.url}}" bindtap="previewImg">
+          <text class="preview-img">查看图片</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="weui-cells">
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">需要刻的章</view>
+        </view>
+        <view class="weui-cell__bd">
+          <text class="weui-input">{{order.stampTypes}}</text>
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">取章方式</view>
+        </view>
+        <view class="weui-cell__bd">
+          <text class="weui-input">{{order.fetchType}}</text>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">收件信息</view>
+        </view>
+        <view class="weui-cell__bd">
+          <text class="weui-input">{{order.receiverInfo}}</text>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">支付状态</view>
+        </view>
+        <view class="weui-cell__bd">
+          <text class="weui-input">{{order.payInfo}}</text>
+        </view>
+      </view>
+
+    </view>
+    <view class="weui-btn-area">
+      <button formType="submit" disabled='{{submitted}}' class="weui-btn" type="primary">下一步</button>
+    </view>
+  </view>
+</form>

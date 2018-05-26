@@ -1,0 +1,57 @@
+<import src="../../common/nav.wxml" />
+
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-search-bar">
+      <view class="weui-search-bar__form">
+        <view class="weui-search-bar__box">
+          <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+          <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{form.searchText}}" focus="{{inputShowed}}" bindinput="inputTyping" />
+          <view class="weui-icon-clear" wx:if="{{form.searchText.length > 0}}" bindtap="clearInput">
+            <icon type="clear" size="14"></icon>
+          </view>
+        </view>
+        <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+          <icon class="weui-icon-search" type="search" size="14"></icon>
+          <view class="weui-search-bar__text">企业信息</view>
+        </label>
+      </view>
+      <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+    </view>
+    <template is="nav" data="{{ navList, activeIndex }}"/>
+    <view class="weui-form-preview" wx:for="{{orders}}" wx:key="value">
+      <view bindtap="redirectTo" data-id="{{item.id}}">
+        <view class="weui-form-preview__hd">
+          <view class="weui-form-preview__item">
+            <view class="weui-form-preview__item">
+              <view class="weui-form-preview__label">订单号:{{item.id}}</view>
+              <view class="weui-form-preview__value">订单时间: {{item.createdTime}}</view>
+            </view>
+          </view>
+        </view>
+        <view class="weui-form-preview__bd">
+          <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">企业名称</view>
+            <view class="weui-form-preview__value">{{item.companyName}}</view>
+          </view>
+          <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">企业法人</view>
+            <view class="weui-form-preview__value">{{item.legalEntity}}</view>
+          </view>
+          <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">取章方式</view>
+            <view class="weui-form-preview__value">{{item.fetchType}}</view>
+          </view>
+          <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">状态</view>
+            <view class="weui-form-preview__value">{{item.orderStatus}}</view>
+          </view>
+          <view class="weui-form-preview__item" wx-if="{{item.expressNo}}">
+            <view class="weui-form-preview__label">快递信息</view>
+            <view class="weui-form-preview__value">{{item.expressInfo}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

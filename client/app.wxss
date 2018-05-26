@@ -1,5 +1,8 @@
 @import 'style/font-awesome.wxss';
+@import 'style/prompt.wxss';
 @import 'style/weui.wxss';
+@import 'style/skyvow.wxss';
+
 /**app.wxss**/
 .container {
   display: flex;

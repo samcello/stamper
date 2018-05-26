@@ -1,24 +1,40 @@
 var config = require('../../config')
 var util = require('../../utils/util.js')
 
-let stampData = {
-  businessLicenseImg: {
-  },
-  legalPersonIdImg: {
-  },
-  otherImgs: []
+let data = {
+  stampTypes: [
+    { name: '公章', value: '0', checked: false },
+    { name: '发票章', value: '1', checked: false },
+    { name: '财务章', value: '2', checked: false },
+    { name: '法人章', value: '3', checked: false },
+    { name: '合同章', value: '4', checked: false}
+  ],
+  stampAttachments: [
+    { label: '营业执照', name: 'businessLicenseUrl', value: '0', sampleUrl: '../../assets/vr.png', url: '' },
+    { label: '法人身份证-正面', name: 'legalIdFrontUrl', value: '1', sampleUrl: '', url: '' },
+    { label: '法人身份证-反面', name: 'legalIdBackUrl', value: '2', sampleUrl: '', url: ''}
+  ]
 };
+
+function updateAttachments(attachType, data, url) {
+  var stampAttachments = data.stampAttachments
+  for (var i = 0, lenI = stampAttachments.length; i < lenI; ++i) {
+    if( stampAttachments[i].value === attachType )
+      stampAttachments[i].url = url
+  }
+  return stampAttachments;
+}
 
 Page({
 
   /**
    * 页面的初始数据
    */
-  data: stampData,
+  data: data,
   // 上传图片接口
-  doUpload: function () {
+  doUpload: function (e) {
     var that = this
-
+    let attachType = e.currentTarget.dataset.attachType
     // 选择图片
     wx.chooseImage({
       count: 1,
@@ -27,7 +43,6 @@ Page({
       success: function (res) {
         util.showBusy('正在上传')
         var filePath = res.tempFilePaths[0]
-
         // 上传图片
         wx.uploadFile({
           url: config.service.uploadUrl,
@@ -39,8 +54,9 @@ Page({
             console.log(res)
             res = JSON.parse(res.data)
             console.log(res)
+            const stampAttachments = updateAttachments(attachType, that.data, res.data.imgUrl);
             that.setData({
-              imgUrl: res.data.imgUrl
+              stampAttachments
             })
           },
 
@@ -56,6 +72,62 @@ Page({
     })
   },
 
+  // 预览图片
+  previewImg: function (e) {
+    const previewUrl = e.currentTarget.dataset.previewUrl
+    console.log(previewUrl);
+    wx.previewImage({
+      current: previewUrl,
+      urls: [previewUrl]
+    })
+  },
+
+  checkboxChange: function (e) {
+    var stampTypes = this.data.stampTypes, values = e.detail.value;
+    for (var i = 0, lenI = stampTypes.length; i < lenI; ++i) {
+      stampTypes[i].checked = false;
+
+      for (var j = 0, lenJ = values.length; j < lenJ; ++j) {
+        if (stampTypes[i].value == values[j]) {
+          stampTypes[i].checked = true;
+          break;
+        }
+      }
+    }
+
+    this.setData({
+      stampTypes
+    });
+  },
+
+  apply: function(e) {
+    const data = e.detail.value
+    console.log(data);
+    var stampAttachments = this.data.stampAttachments
+    for (var i = 0, lenI = stampAttachments.length; i < lenI; ++i) {
+      if (stampAttachments[i].url !=='')
+        data[stampAttachments[i].name] = stampAttachments[i].url
+    }
+    data['stampTypes'] = data['stampTypes'].join('|')
+    wx.navigateTo({
+      url: '/pages/submit/submit?stampData='+JSON.stringify(data)
+    })
+    // console.log(data)
+    // wx.request({
+    //   url: config.service.applyUrl, 
+    //   data,
+    //   header: {
+    //     'content-type': 'application/json'
+    //   },
+    //   method: 'POST',
+    //   success: function (res) {
+    //     console.log(res.data)
+    //     wx.navigateTo({
+    //       url: '/pages/submit/submit'
+    //     })
+    //   }
+    // })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

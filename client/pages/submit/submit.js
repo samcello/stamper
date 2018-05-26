@@ -1,43 +1,56 @@
 var config = require('../../config')
-var util = require('../../utils/util.js')
-
-let data = {
-  orders: []
-}
 
 Page({
 
   /**
    * 页面的初始数据
    */
-  data: data,
+  data: {
+    fetchTypes: [
+      { name: '自取', value: 0, checked: true },
+      { name: '快递', value: 1, checked: false},
+    ],
+    payTypes: [
+      { name: '微信', value: 0, checked: true }
+    ]
+  },
+  preData: {},
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    let that = this;
+  radioChange: function (e) {
+    var fetchTypes = this.data.fetchTypes;
+    for (var i = 0, len = fetchTypes.length; i < len; ++i) {
+      fetchTypes[i].checked = fetchTypes[i].value == e.detail.value;
+    }
+
+    this.setData({
+      fetchTypes
+    });
+  },
+
+  apply(e) {
+    const data = e.detail.value
+    console.log(data)
+    Object.assign(data, this.preData);
     wx.request({
-      url: config.service.getAllUrl,
+      url: config.service.applyUrl, 
+      data,
       header: {
         'content-type': 'application/json'
       },
+      method: 'POST',
       success: function (res) {
         console.log(res.data)
-        for(let order of res.data) {
-          order.createdTime = util.formatTime(new Date(order.createdTime))
-        }
-        that.setData({
-          orders: res.data
+        wx.redirectTo({
+          url: '/pages/home/home'
         })
       }
     })
   },
-
-  gotoApply() {
-    wx.redirectTo({
-      url: '/pages/apply/apply',
-    })
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    this.preData = JSON.parse(options.stampData)
   },
 
   /**

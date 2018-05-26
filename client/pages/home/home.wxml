@@ -1,2 +1,32 @@
-<!--pages/home/home.wxml-->
-<text>pages/home/home.wxml</text>
+<view class="page">
+    <view class="page__bd">
+        <view class="weui-form-preview" wx:for="{{orders}}" wx:key="value">
+            <view class="weui-form-preview__hd">
+                <view class="weui-form-preview__item">
+                    <view class="">订单号:{{item.id}} 订单时间: {{item.createdTime}}</view>
+                </view>
+            </view>
+            <view class="weui-form-preview__bd">
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">企业名称</view>
+                    <view class="weui-form-preview__value">{{item.companyName}}</view>
+                </view>
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">企业法人</view>
+                    <view class="weui-form-preview__value">{{item.legalEntity}}</view>
+                </view>
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">取章方式</view>
+                    <view class="weui-form-preview__value">{{item.fetchType}}</view>
+                </view>
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">状态</view>
+                    <view class="weui-form-preview__value">{{item.status}}</view>
+                </view>
+            </view>
+        </view>
+        <view class="weui-footer weui-footer_fixed-bottom">
+          <button class="weui-btn" bindtap="gotoApply">发起刻章申请</button>
+        </view>
+    </view>
+</view>

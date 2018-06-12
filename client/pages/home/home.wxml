@@ -25,7 +25,9 @@
                 </view>
             </view>
         </view>
+        
         <view class="weui-footer weui-footer_fixed-bottom">
+                    <button open-type="getUserInfo" bindgetuserinfo="bindgetuserinfo">点击测试登录接口</button>
           <button class="weui-btn" bindtap="gotoApply">发起刻章申请</button>
         </view>
     </view>

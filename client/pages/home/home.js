@@ -34,6 +34,30 @@ Page({
     })
   },
 
+  bindgetuserinfo: function (e) {
+    var that = this;
+    if (e.detail.userInfo) {
+      // 发送 res.code 到后台换取 openId, sessionKey, unionId
+      wx.login({
+        success: res => {
+          console.log(res.code, e.detail.iv, e.detail.encryptedData)
+          wx.getUserInfo({
+            success:function(res){
+              console.log(res)
+            }
+          })
+        }
+      })
+    } else {
+      console.log(333, '执行到这里，说明拒绝了授权')
+      wx.showToast({
+        title: "为了您更好的体验,请先同意授权",
+        icon: 'none',
+        duration: 2000
+      });
+    }
+  },
+
   gotoApply() {
     wx.redirectTo({
       url: '/pages/apply/apply',

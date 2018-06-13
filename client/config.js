@@ -27,6 +27,9 @@ var config = {
         applyUrl: `${host}/weapp/stamper/apply`,
         //获取印章接口
         getAllUrl: `${host}/weapp/stampers`,
+        getOrdersUrl: `${host}/weapp/orders`,
+        getOrderUrl: `${host}/weapp/order`,
+        updateOrderUrl: `${host}/weapp/order/update`,
     }
 };
 

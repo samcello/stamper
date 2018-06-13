@@ -32,7 +32,9 @@ router.get('/message', controllers.message.get)
 // POST 用来处理微信转发过来的客服消息
 router.post('/message', controllers.message.post)
 
-router.post('/stamper/apply', controllers.stamper.apply)
-router.get('/stampers', controllers.stamper.getAll)
-
+router.post('/stamper/apply', controllers.orders.apply)
+router.get('/stampers', controllers.orders.getAll)
+router.get('/orders', controllers.orders.getOrders)
+router.get('/order', controllers.orders.getOrder)
+router.post('/order/update', controllers.orders.updateOrder)
 module.exports = router

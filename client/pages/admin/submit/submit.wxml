@@ -1,0 +1,55 @@
+<form bindsubmit="submit" bindreset="formReset">
+  <view class="page__bd order-apply-form">
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">企业名称</view>
+        </view>
+        <view class="weui-cell__bd">
+          <text class="weui-input">{{order.companyName}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="weui-cells__title">修改状态</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_select">
+        <view class="weui-cell__bd">
+          <picker bindchange="bindStatusChange" value="{{form.statusIndex}}" range="{{orderStatus}}">
+            <view class="weui-select">{{orderStatus[form.statusIndex]}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_textarea" wx-if="{{!verifyPass}}">
+        <view class="weui-cell__hd">
+          <view class="weui-label">备注</view>
+        </view>
+        <view class="weui-cell__bd">
+          <textarea name="comments" value="{{ form.comments }}" class="weui-textarea" placeholder="请添加备注" style="height: 3.3em" />
+        </view>
+      </view>
+    </view>
+    <view wx-if="{{verifyPass}}">
+      <view class="weui-cells__title">快递公司</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__bd">
+            <picker bindchange="expressChange" value="{{form.expressIndex}}" range="{{expressCompany}}">
+              <view class="weui-select">{{expressCompany[form.expressIndex]}}</view>
+            </picker>
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">快递号</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" name="expressNo" value="{{order.expressNo}}" placeholder="请输入快递号" />
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="weui-btn-area">
+      <button formType="submit" class="weui-btn" type="primary">提交</button>
+    </view>
+  </view>
+</form>

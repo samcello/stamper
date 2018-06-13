@@ -14,7 +14,8 @@ const data = {
   },
   orderStatus: ['已发货', '已退回'],
   expressCompany: ['顺丰速运'],
-  verifyPass: true
+  verifyPass: true,
+  submitted: false
 }
 
 Page({
@@ -64,10 +65,18 @@ Page({
   },
 
   submit(e) {
+    const that = this
     const data = e.detail.value
     const id = this.orderId
     Object.assign(data, { id }, { orderStatus: statusMapping[this.data.form.statusIndex]}, {expressCompany: this.data.form.expressIndex});
     console.log(data);
+    this.setData({
+      submitted: true
+    })
+    wx.showLoading({
+      title: '处理中',
+      mask: true,
+    })
     wx.request({
       url: config.service.updateOrderUrl,
       data,
@@ -78,7 +87,13 @@ Page({
       success: function (res) {
         setTimeout(() => {
           wx.navigateTo({
-            url: '/pages/admin/home/home'
+            url: '/pages/admin/home/home',
+            success: function () {
+              that.setData({
+                submitted: false
+              })
+              wx.hideLoading()
+            }
           })
         }, 1500)
       }

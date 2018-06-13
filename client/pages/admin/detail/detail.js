@@ -4,7 +4,8 @@ let dict = require('../../../utils/dict.js')
 const App = getApp()
 
 const data = {
-  order: {}
+  order: {},
+  submitted: false
 }
 Page({
 
@@ -83,6 +84,7 @@ Page({
     })
   },
   apply(e) {
+    const that = this
     const data = e.detail.value
     const id = this.orderId
     console.log(data)
@@ -96,6 +98,13 @@ Page({
       })
       return false
     }
+    this.setData({
+      submitted: true
+    })
+    wx.showLoading({
+      title: '处理中',
+      mask: true,
+    })
     Object.assign(data, {id});
     wx.request({
       url: config.service.updateOrderUrl,
@@ -107,7 +116,13 @@ Page({
       success: function (res) {
         setTimeout(() => {
           wx.navigateTo({
-            url: '/pages/admin/submit/submit?id='+ id
+            url: '/pages/admin/submit/submit?id='+ id,
+            success: function() {
+              that.setData({
+                submitted: false
+              })
+              wx.hideLoading()
+            }
           })
         }, 1500)
       }

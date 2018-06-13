@@ -1,8 +1,8 @@
 {
   "pages":[
+    "pages/admin/home/home",
     "pages/client/home/home",
     "pages/client/apply/apply",
-    "pages/admin/home/home",
     "pages/admin/detail/detail",
     "pages/admin/submit/submit",
     "pages/client/submit/submit",

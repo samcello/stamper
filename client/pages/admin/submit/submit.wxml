@@ -49,7 +49,7 @@
       </view>
     </view>
     <view class="weui-btn-area">
-      <button formType="submit" class="weui-btn" type="primary">提交</button>
+      <button formType="submit" disabled='{{submitted}}' class="weui-btn" type="primary">提交</button>
     </view>
   </view>
 </form>

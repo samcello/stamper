@@ -9,5 +9,20 @@ App({
         qcloud.setLoginUrl(config.service.loginUrl)
     },
     WxValidate: (rules, messages) => new WxValidate(rules, messages),
-    WxService: new WxService
+    WxService: new WxService,
+    getUserInfo() {
+      return this.WxService.login()
+        .then(data => {
+          console.log(data)
+          return this.WxService.getUserInfo()
+        })
+        .then(data => {
+          console.log(data)
+          this.globalData.userInfo = data.userInfo
+          return this.globalData.userInfo
+        })
+    },
+    globalData: {
+      userInfo: null
+    }
 })

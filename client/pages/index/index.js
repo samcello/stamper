@@ -12,6 +12,8 @@ Page({
     },
 
     onLoad: function (options) {
+      console.log('**')
+      this.login();
       if (this.data.logged) wx.redirectTo({
         url: '/pages/',
       })
@@ -19,7 +21,7 @@ Page({
 
     // 用户登录示例
     login: function() {
-
+        console.log('---------')
 
         util.showBusy('正在登录')
         var that = this

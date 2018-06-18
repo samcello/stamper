@@ -57,7 +57,7 @@
       </checkbox-group>
   </view>
   <view class="weui-btn-area">
-      <button formType="submit" class="weui-btn" type="primary">下一步</button>
+      <button formType="submit" disabled='{{submitted}}' class="weui-btn" type="primary">下一步</button>
   </view>
 </view>
 </form>

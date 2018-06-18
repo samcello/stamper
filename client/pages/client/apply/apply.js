@@ -25,7 +25,8 @@ let data = {
     { label: '法人身份证-反面', name: 'legalIdBackUrl', value: '2', sampleUrl: '', url: '' },
     { label: '委托书', name: 'mandateUrl', value: '3', sampleUrl: '', url: '' },
     { label: '法人自拍照', name: 'selfieUrl', value: '4', sampleUrl: '', url: ''}
-  ]
+  ],
+  submitted: false
 };
 
 function updateAttachments(attachType, data, url) {
@@ -145,6 +146,7 @@ Page({
   },
 
   apply: function(e) {
+    const that = this
     const data = e.detail.value
     console.log(data)
 
@@ -157,6 +159,13 @@ Page({
       })
       return false
     }
+    this.setData({
+      submitted: true
+    })
+    wx.showLoading({
+      title: '处理中',
+      mask: true,
+    })
     console.log(data);
     var stampAttachments = this.data.stampAttachments
     for (var i = 0, lenI = stampAttachments.length; i < lenI; ++i) {
@@ -169,7 +178,13 @@ Page({
       return result
     },0)
     wx.navigateTo({
-      url: '/pages/client/submit/submit?stampData='+JSON.stringify(data)
+      url: '/pages/client/submit/submit?stampData='+JSON.stringify(data),
+      success: function() {
+        that.setData({
+          submitted: false
+        })
+        wx.hideLoading()
+      }
     })
   },
 

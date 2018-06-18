@@ -5,6 +5,8 @@ let dict = require('../../../utils/dict.js')
 let data = {
   orders: []
 }
+let startTime;
+let endTime;
 
 Page({
 
@@ -38,6 +40,20 @@ Page({
     })
   },
 
+  bindTap: function (e) {
+    if (this.endTime - this.startTime > 5000) {
+      wx.navigateTo({
+        url: '/pages/login/login',
+      })
+    }
+  },
+
+  bindTouchStart(e) {
+    this.startTime = e.timeStamp;
+  },
+  bindTouchEnd(e) {
+    this.endTime = e.timeStamp;
+  },
   gotoApply() {
     wx.navigateTo({
       url: '/pages/client/apply/apply',

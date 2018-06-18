@@ -2,17 +2,20 @@ var config = require('../../../config')
 var util = require('../../../utils/util.js')
 let dict = require('../../../utils/dict.js')
 const App = getApp()
-const statusMapping = {
+const orderStatusMapping = {
   0: 4,
   1: 5
 }
+
 const data = {
   form: {
-    statusIndex: 0,
+    orderStatusIndex: 0,
+    payStatusIndex: 0,
     expressIndex: 0,
     comments: ''
   },
   orderStatus: ['已发货', '已退回'],
+  payStatus: ['未支付', '已支付'],
   expressCompany: ['顺丰速运'],
   verifyPass: true,
   submitted: false
@@ -39,23 +42,33 @@ Page({
       data: { id: that.orderId },
       success: function (res) {
         console.log(res.data)
+        console.log('-----')
+        console.log(util.reverse(orderStatusMapping)[res.data[0].orderStatus])
         that.setData({
           order: res.data[0],
           verifyPass: res.data[0].orderStatus != 5,
-          'form.statusIndex': util.reverse(statusMapping)[res.data[0].orderStatus],
+          'form.orderStatusIndex': util.reverse(orderStatusMapping)[res.data[0].orderStatus],
+          'form.payStatusIndex': res.data[0].payStatus,
           'form.comments': res.data[0].comments
         })
       }
     })
   },
 
-  bindStatusChange: function (e) {
+  bindOrderStatusChange: function (e) {
     const status = e.detail.value
     this.setData({
-      'form.statusIndex': status
+      'form.orderStatusIndex': status
     })
     if (status === '0') this.setData({ verifyPass: true})
     else this.setData({ verifyPass: false })
+  },
+
+  bindPayStatusChange: function (e) {
+    const status = e.detail.value
+    this.setData({
+      'form.payStatusIndex': status
+    })
   },
 
   expressChange(e) {
@@ -68,7 +81,7 @@ Page({
     const that = this
     const data = e.detail.value
     const id = this.orderId
-    Object.assign(data, { id }, { orderStatus: statusMapping[this.data.form.statusIndex]}, {expressCompany: this.data.form.expressIndex});
+    Object.assign(data, { id }, { orderStatus: orderStatusMapping[this.data.form.orderStatusIndex]}, {expressCompany: this.data.form.expressIndex, payStatus: this.data.form.payStatusIndex });
     console.log(data);
     this.setData({
       submitted: true

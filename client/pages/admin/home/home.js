@@ -80,7 +80,7 @@ Page({
         for (let order of res.data) {
           order.createdTime = util.formatTime(new Date(order.createdTime))
           order.fetchType = dict.fetchTypes[order.fetchType]
-          order.orderStatus = dict.orderStatus[order.orderStatus]
+          order.orderStatusText = dict.orderStatus[order.orderStatus]
           order.expressInfo = `${dict.expressCompany[order.expressCompany]}/${order.expressNo}`
         }
         that.setData({

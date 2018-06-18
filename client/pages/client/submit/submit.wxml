@@ -2,7 +2,7 @@
   <view class="page__bd">
     <view class="weui-cells__title">取章方式</view>
     <view class="weui-cells weui-cells_after-title">
-      <radio-group bindchange="radioChange" name="fetchType">
+      <radio-group bindchange="fetchTypeChange" name="fetchType">
         <label class="weui-cell weui-check__label" wx:for="{{fetchTypes}}" wx:key="value">
           <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
           <view class="weui-cell__bd">{{item.name}}</view>
@@ -44,11 +44,9 @@
       </view>
     </view>
 
-
-
     <view class="weui-cells__title">支付方式</view>
     <view class="weui-cells weui-cells_after-title">
-      <radio-group bindchange="radioChange" name="payType">
+      <radio-group bindchange="payTypeChange" name="payType">
         <label class="weui-cell weui-check__label" wx:for="{{payTypes}}" wx:key="value">
           <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
           <view class="weui-cell__bd">{{item.name}}</view>

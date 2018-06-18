@@ -39,10 +39,17 @@ async function updateOrder(ctx, next) {
   return await mysql('orders').update(order).where({id: order.id})
 }
 
+async function getOrdersByUser(ctx, next) {
+  const { openId } = ctx.query
+  const result = await mysql('orders').select('*').where({ userId: openId}).orderBy('createdTime', 'desc')
+  ctx.body = result
+}
+
 module.exports = {
   apply,
   getAll,
   getOrders,
   getOrder,
-  updateOrder
+  updateOrder,
+  getOrdersByUser
 }

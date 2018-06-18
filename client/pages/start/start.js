@@ -12,10 +12,6 @@ Page({
   },
 
   onLoad: function (options) {
-    this.login();
-    if (this.data.logged) wx.redirectTo({
-      url: '/pages/client/client',
-    })
   },
 
   // 用户登录示例
@@ -106,6 +102,9 @@ Page({
                 userInfo: userInfo,
                 logged: true
               })
+              wx.redirectTo({
+                url: '/pages/index/index',
+              })
             },
 
             fail: function () {
@@ -143,6 +142,9 @@ Page({
             that.setData({
               userInfo: options.userInfo,
               logged: true
+            })
+            wx.redirectTo({
+              url: '/pages/client/start/start',
             })
           },
           fail(error) {

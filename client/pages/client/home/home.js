@@ -20,8 +20,10 @@ Page({
    */
   onLoad: function (options) {
     let that = this;
+    const openId = wx.getStorageSync('openId');
     wx.request({
-      url: config.service.getAllUrl,
+      url: config.service.getOrdersByUser,
+      data: {openId},
       header: {
         'content-type': 'application/json'
       },

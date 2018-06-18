@@ -7,6 +7,15 @@ var config = require('./config')
 App({
     onLaunch: function () {
         qcloud.setLoginUrl(config.service.loginUrl)
+        wx.getSetting({
+          success: res => {
+            if (res.authSetting['scope.userInfo']) {
+              wx.redirectTo({
+                url: '/pages/index/index',
+              })
+            }
+          }
+        })
     },
     WxValidate: (rules, messages) => new WxValidate(rules, messages),
     WxService: new WxService,

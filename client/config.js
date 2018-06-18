@@ -32,6 +32,7 @@ var config = {
         updateOrderUrl: `${host}/weapp/order/update`,
         getUserUrl: `${host}/weapp/user`,
         adminLoginUrl: `${host}/weapp/admin/login`,
+        getOrdersByUser: `${host}/weapp/user/orders`,
     }
 };
 

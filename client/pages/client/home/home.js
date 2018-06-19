@@ -5,6 +5,8 @@ let dict = require('../../../utils/dict.js')
 let data = {
   orders: []
 }
+let startTime;
+let endTime;
 
 Page({
 
@@ -18,8 +20,10 @@ Page({
    */
   onLoad: function (options) {
     let that = this;
+    const openId = wx.getStorageSync('openId');
     wx.request({
-      url: config.service.getAllUrl,
+      url: config.service.getOrdersByUser,
+      data: {openId},
       header: {
         'content-type': 'application/json'
       },
@@ -38,6 +42,20 @@ Page({
     })
   },
 
+  bindTap: function (e) {
+    if (this.endTime - this.startTime > 5000) {
+      wx.navigateTo({
+        url: '/pages/login/login',
+      })
+    }
+  },
+
+  bindTouchStart(e) {
+    this.startTime = e.timeStamp;
+  },
+  bindTouchEnd(e) {
+    this.endTime = e.timeStamp;
+  },
   gotoApply() {
     wx.navigateTo({
       url: '/pages/client/apply/apply',

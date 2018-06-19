@@ -37,4 +37,7 @@ router.get('/stampers', controllers.orders.getAll)
 router.get('/orders', controllers.orders.getOrders)
 router.get('/order', controllers.orders.getOrder)
 router.post('/order/update', controllers.orders.updateOrder)
+router.post('/user', controllers.userInfo.getUser)
+router.post('/admin/login', controllers.userInfo.login)
+router.get('/user/orders', controllers.orders.getOrdersByUser)
 module.exports = router

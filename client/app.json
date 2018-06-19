@@ -1,14 +1,14 @@
 {
   "pages":[
+    "pages/start/start",
+    "pages/login/login",
     "pages/admin/home/home",
     "pages/client/home/home",
-    "pages/client/apply/apply",
-    "pages/admin/detail/detail",
-    "pages/admin/submit/submit",
     "pages/client/submit/submit",
-    "pages/client/start/start",
+    "pages/client/apply/apply",
     "pages/index/index",
-    "pages/addCgi/addCgi"
+    "pages/admin/detail/detail",
+    "pages/admin/submit/submit"
   ],
   "window": {
     "navigationBarBackgroundColor": "#479de6",

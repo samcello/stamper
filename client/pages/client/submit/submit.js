@@ -13,14 +13,16 @@ Page({
       { name: '快递', value: 1, checked: false},
     ],
     payTypes: [
-      { name: '微信', value: 0, checked: true }
+      { name: '微信', value: 0, checked: true },
+      { name: '线下支付', value: 2, checked: false }
     ],
     receiverAddress:"",
-    totalPrice: 0
+    totalPrice: 0,
+    submitted: false
   },
   preData: {},
 
-  radioChange: function (e) {
+  fetchTypeChange: function (e) {
     var fetchTypes = this.data.fetchTypes;
     for (var i = 0, len = fetchTypes.length; i < len; ++i) {
       fetchTypes[i].checked = fetchTypes[i].value == e.detail.value;
@@ -31,7 +33,19 @@ Page({
     });
   },
 
+  payTypeChange: function(e) {
+    var payTypes = this.data.payTypes;
+    for (var i = 0, len = payTypes.length; i < len; ++i) {
+      payTypes[i].checked = payTypes[i].value == e.detail.value;
+    }
+
+    this.setData({
+      payTypes
+    });
+  },
+
   apply(e) {
+    const that = this
     const data = e.detail.value
     if (!this.WxValidate.checkForm(e)) {
       const error = this.WxValidate.errorList[0]
@@ -42,7 +56,14 @@ Page({
       })
       return false
     }
-    Object.assign(data, this.preData);
+    this.setData({
+      submitted: true
+    })
+    wx.showLoading({
+      title: '处理中',
+      mask: true,
+    })
+    Object.assign(data, this.preData, {payStatus: 0});
     wx.request({
       url: config.service.applyUrl, 
       data,
@@ -55,6 +76,12 @@ Page({
         setTimeout(() => {
           wx.redirectTo({
             url: '/pages/client/home/home',
+            success: function () {
+              that.setData({
+                submitted: false
+              })
+              wx.hideLoading()
+            }
           })
         }, 1500)
       }

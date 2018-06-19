@@ -12,53 +12,77 @@ Page({
     },
 
     onLoad: function (options) {
+      console.log('**')
+      this.login();
       if (this.data.logged) wx.redirectTo({
         url: '/pages/',
       })
     },
 
     // 用户登录示例
-    login: function() {
+    login: function () {
+      util.showBusy('正在登录')
+      var that = this
 
-
-        util.showBusy('正在登录')
-        var that = this
-
-        // 调用登录接口
-        qcloud.login({
-            success(result) {
-                if (result) {
-                    util.showSuccess('登录成功');
-                    that.setData({
-                        userInfo: result,
-                        logged: true
-                    })
+      // 调用登录接口
+      qcloud.login({
+        success(result) {
+          console.log(result);
+          wx.setStorageSync('openId', result.openId)
+          if (result) {
+            util.showSuccess('登录成功');
+            that.setData({
+              userInfo: result,
+              logged: true
+            })
+            const openId = result.openId;
+            wx.request({
+              url: config.service.getUserUrl,
+              data: { openId },
+              header: {
+                'content-type': 'application/json'
+              },
+              method: 'POST',
+              success: function (res) {
+                if (res.data[0] && res.data[0].roles === "0") {
+                  wx.redirectTo({
+                    url: '/pages/admin/home/home',
+                  })
                 } else {
-                    // 如果不是首次登录，不会返回用户信息，请求用户信息接口获取
-                    qcloud.request({
-                        url: config.service.requestUrl,
-                        login: true,
-                        success(result) {
-                            util.showSuccess('登录成功')
-                            that.setData({
-                                userInfo: result.data.data,
-                                logged: true
-                            })
-                        },
-
-                        fail(error) {
-                            util.showModel('请求失败', error)
-                            console.log('request fail', error)
-                        }
-                    })
+                  wx.redirectTo({
+                    url: '/pages/client/home/home',
+                  })
                 }
-            },
+              }
+            })
 
-            fail(error) {
-                util.showModel('登录失败', error)
-                console.log('登录失败', error)
-            }
-        })
+
+          } else {
+            // 如果不是首次登录，不会返回用户信息，请求用户信息接口获取
+            qcloud.request({
+              url: config.service.requestUrl,
+              login: true,
+              success(result) {
+                util.showSuccess('登录成功')
+                that.setData({
+                  userInfo: result.data.data,
+                  logged: true
+                })
+              },
+
+              fail(error) {
+                util.showModel('请求失败', error)
+                console.log('request fail', error)
+              }
+            })
+          }
+        },
+
+        fail(error) {
+          util.showModel('登录失败', error)
+          console.log('登录失败', error)
+        }
+      })
     },
 
     bindGetUserInfo: function (e) {

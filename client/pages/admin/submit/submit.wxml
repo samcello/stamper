@@ -10,12 +10,22 @@
         </view>
       </view>
     </view>
-    <view class="weui-cells__title">修改状态</view>
+    <view class="weui-cells__title">修改支付状态</view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_select">
         <view class="weui-cell__bd">
-          <picker bindchange="bindStatusChange" value="{{form.statusIndex}}" range="{{orderStatus}}">
-            <view class="weui-select">{{orderStatus[form.statusIndex]}}</view>
+          <picker bindchange="bindPayStatusChange" value="{{form.payStatusIndex}}" range="{{payStatus}}">
+            <view class="weui-select">{{payStatus[form.payStatusIndex]}}</view>
+          </picker>
+        </view>
+      </view>
+    </view>
+    <view class="weui-cells__title">修改订单状态</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_select">
+        <view class="weui-cell__bd">
+          <picker bindchange="bindOrderStatusChange" value="{{form.orderStatusIndex}}" range="{{orderStatus}}">
+            <view class="weui-select">{{orderStatus[form.orderStatusIndex]}}</view>
           </picker>
         </view>
       </view>

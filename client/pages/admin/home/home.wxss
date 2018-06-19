@@ -11,3 +11,15 @@
 .topbar-item.active {
     color: #479de6;
 }
+
+.order_status_4 {
+  color: green;
+}
+
+.order_status_5 {
+  color: red;
+}
+
+.order_status_1 {
+  color: blue;
+}

@@ -12,6 +12,7 @@ Page({
   },
 
   onLoad: function (options) {
+    
   },
 
   // 用户登录示例
@@ -144,7 +145,7 @@ Page({
               logged: true
             })
             wx.redirectTo({
-              url: '/pages/client/start/start',
+              url: '/pages/index/index',
             })
           },
           fail(error) {

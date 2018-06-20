@@ -18,3 +18,16 @@
 .weui-form-preview__value_in-hd {
   font-size: 18px;
 }
+
+page{background-color: #efeff4;}
+.tui-picker-name{
+  height: 80rpx;
+  line-height: 80rpx;
+}
+.tui-picker-detail{
+  height: 70rpx;
+  line-height: 70rpx;
+  background-color: #fff;
+  font-size: 30rpx;
+  overflow: hidden;
+}

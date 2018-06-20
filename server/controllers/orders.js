@@ -3,7 +3,7 @@ const { mysql } = require('../qcloud')
 async function apply(ctx, next) {
   const order = ctx.request.body
   const createdTime  = Date.now()
-  Object.assign(order, { createdTime, userId: 'sample', orderStatus: 1, orderId: createdTime})
+  Object.assign(order, { createdTime, orderStatus: 1, orderId: createdTime})
   const result = await mysql('orders').insert(order)
   ctx.body = result
 }

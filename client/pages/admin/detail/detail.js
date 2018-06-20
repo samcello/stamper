@@ -64,8 +64,9 @@ Page({
             { label: '法人自拍照', name: 'selfieUrl', value: '4', url: order.selfieUrl }
           ];
           order.stampTypes = order.stampTypes.split('|').map((stampType) => dict.stampTypes[stampType]).join(', ')
-          order.receiverInfo = `${order.receiverAddress}, ${order.receiverName}, ${order.receiverPhone}`
-          order.payInfo = `${order.payType}${order.payStatus}`
+          const receiverRegion = order.receiverRegion.split('|').join('');
+          order.receiverInfo = `${receiverRegion}${order.receiverAddress}, ${order.receiverName}, ${order.receiverPhone}`
+          order.payInfo = `${order.payType} - ${order.payStatus}`
         }
         that.setData({
           order: res.data[0]

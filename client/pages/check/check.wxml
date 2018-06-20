@@ -1,0 +1,14 @@
+<view class="login-container">
+	<view class="login" wx:if="{{!hasUserInfo && canIUse}}">
+		<view class="app-info">
+			<text class="app-name">在线刻章</text>
+		</view>
+		<view class="alert">
+			<view class="alert-title">网页由该小程序开发，请确认授权以下信息</view>
+			<view class="alert-desc">
+				<view class="alert-text">获得你的公开信息（昵称、头像等）</view>
+			</view>
+		</view>
+	  <button class="userinfo-nickname" type="primary" open-type="getUserInfo" bindgetuserinfo="getUserInfo">登录</button>
+	</view>
+</view>

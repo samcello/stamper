@@ -63,7 +63,8 @@ Page({
       title: '处理中',
       mask: true,
     })
-    Object.assign(data, this.preData, {payStatus: 0});
+    const openId = wx.getStorageSync('openId')
+    Object.assign(data, this.preData, { payStatus: 0 }, { userId: openId});
     wx.request({
       url: config.service.applyUrl, 
       data,

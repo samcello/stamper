@@ -12,7 +12,6 @@ Page({
     },
 
     onLoad: function (options) {
-      console.log('**')
       this.login();
       if (this.data.logged) wx.redirectTo({
         url: '/pages/',

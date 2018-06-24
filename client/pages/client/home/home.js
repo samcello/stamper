@@ -28,7 +28,6 @@ Page({
         'content-type': 'application/json'
       },
       success: function (res) {
-        console.log(res.data)
         for(let order of res.data) {
           order.createdTime = util.formatTime(new Date(order.createdTime))
           order.fetchType = dict.fetchTypes[order.fetchType]

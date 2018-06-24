@@ -113,7 +113,6 @@ Page({
       totalPrice: this.preData.totalPrice,
       preData: this.preData
     }) 
-    console.log(this.preData)
     this.WxValidate = App.WxValidate({
       receiverName: {
         required: true,

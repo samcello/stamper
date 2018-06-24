@@ -23,7 +23,6 @@ Page({
     // 调用登录接口
     qcloud.login({
       success(result) {
-        console.log(result);
         wx.setStorageSync('openId', result.openId)
         if (result) {
           util.showSuccess('登录成功');
@@ -215,9 +214,7 @@ Page({
 
           success: function (res) {
             util.showSuccess('上传图片成功')
-            console.log(res)
             res = JSON.parse(res.data)
-            console.log(res)
             that.setData({
               imgUrl: res.data.imgUrl
             })

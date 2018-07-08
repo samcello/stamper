@@ -64,7 +64,15 @@ Page({
             { label: '委托书', name: 'mandateUrl', value: '3', url: order.mandateUrl },   
             { label: '其它证明文件', name: 'otherUrl', value: '4', url: order.mandateUrl },            
           ];
-          order.stampTypes = order.stampTypes.split('|').map((stampType) => dict.stampTypes[stampType]).join(', ')
+          order.stampTypes = order.stampTypes.split('|').map((stampType) => 
+            {
+              if (stampType !== '4') {
+                return dict.stampTypes[stampType]
+              }else {
+                return `${dict.stampTypes[stampType]} * ${order.contractNum}`
+              }
+            }
+          ).join(', ')
           const receiverRegion = order.receiverRegion.split('|').join('');
           order.receiverInfo = `${receiverRegion}${order.receiverAddress}, ${order.receiverName}, ${order.receiverPhone}`
           order.payInfo = `${order.payType} - ${order.payStatus}`

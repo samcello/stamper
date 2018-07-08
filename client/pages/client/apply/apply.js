@@ -11,14 +11,16 @@ let data = {
     legalIdUrl: '',
     // legalIdFrontUrl: '',
     // legalIdBackUrl: '',
-    stampTypes: ''
+    stampTypes: '',
+    contractNum: 1,
+    minusStatus: 'disabled'
   },
   stampTypes: [
     { name: '法人章', value: '0', price: '20.00', checked: false },
     { name: '财务专用章', value: '1', price: '30.00', checked: false },
     { name: '法定名称章', value: '2', price: '80.00', checked: false },
     { name: '发票专用章', value: '3', price: '80.00', checked: false },
-    { name: '合同专用章', value: '4', price: '80.00', checked: false },
+    { name: '合同专用章', value: '4', price: '80.00', checked: false, multi: true },
     
   ],
   stampAttachments: [
@@ -172,8 +174,10 @@ Page({
     data['stampTypes'] = data['stampTypes'].join('|')
     data['totalPrice'] = this.data.stampTypes.reduce((result, steampType) => {
       if (steampType.checked) result = result + Number(steampType.price)
+      if (steampType.multi === true) result = result + Number(steampType.price) * (this.data['form'].contractNum -1)
       return result
     },0)
+    data['contractNum'] = this.data['form'].contractNum
     wx.navigateTo({
       url: '/pages/client/submit/submit?stampData='+JSON.stringify(data),
       success: function() {
@@ -183,6 +187,29 @@ Page({
         wx.hideLoading()
       }
     })
+  },
+
+  bindMinus: function () {
+    var contractNum = this.data.form.contractNum;
+    if (contractNum > 1) {
+      contractNum--;
+    }
+    var minusStatus = contractNum <= 1 ? 'disabled' : 'normal';
+    this.setData({
+      'form.contractNum':contractNum,
+      minusStatus
+    });
+  },
+  bindPlus: function () {
+    var contractNum = this.data.form.contractNum;
+    contractNum++;
+    var minusStatus = contractNum < 1 ? 'disabled' : 'normal';
+    this.setData({
+      'form.contractNum':contractNum,
+      minusStatus
+    });
+  },
+  bindManual: function (e) {
   },
 
   /**

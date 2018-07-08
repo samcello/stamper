@@ -57,37 +57,50 @@ Page({
       })
       return false
     }
-    this.setData({
-      submitted: true
-    })
-    wx.showLoading({
-      title: '处理中',
-      mask: true,
-    })
-    const openId = wx.getStorageSync('openId')
-    Object.assign(data, this.preData, { payStatus: 0 }, { userId: openId }, { receiverRegion: data.receiverRegion.join('|')});
-    wx.request({
-      url: config.service.applyUrl, 
-      data,
-      header: {
-        'content-type': 'application/json'
-      },
-      method: 'POST',
+    wx.showModal({
+      title: '确认提交',
+      content: '申请人承诺以上材料真实有效, 没有虚假',
+      confirmText: "确认",
+      cancelText: "取消",
       success: function (res) {
-        util.showSuccess("订单提交成功!");
-        setTimeout(() => {
-          wx.redirectTo({
-            url: '/pages/client/home/home',
-            success: function () {
-              that.setData({
-                submitted: false
-              })
-              wx.hideLoading()
+        console.log(res);
+        if (res.confirm) {
+          that.setData({
+            submitted: true
+          })
+          wx.showLoading({
+            title: '处理中',
+            mask: true,
+          })
+          const openId = wx.getStorageSync('openId')
+          Object.assign(data, that.preData, { payStatus: 0 }, { userId: openId }, { receiverRegion: data.receiverRegion.join('|') });
+          wx.request({
+            url: config.service.applyUrl,
+            data,
+            header: {
+              'content-type': 'application/json'
+            },
+            method: 'POST',
+            success: function (res) {
+              util.showSuccess("订单提交成功!");
+              setTimeout(() => {
+                wx.redirectTo({
+                  url: '/pages/client/home/home',
+                  success: function () {
+                    that.setData({
+                      submitted: false
+                    })
+                    wx.hideLoading()
+                  }
+                })
+              }, 1500)
             }
           })
-        }, 1500)
+        } else {
+          return false
+        }
       }
-    })
+    });
   },
 
   changeRegin(e) {

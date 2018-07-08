@@ -9,7 +9,7 @@
             <input class="weui-input" name="companyName" placeholder="请输入企业名称"/>
         </view>
     </view>
-    <view class="weui-cell weui-cell_input">
+    <!-- <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
             <view class="weui-label">企业法人</view>
         </view>
@@ -24,7 +24,7 @@
         <view class="weui-cell__bd">
             <input class="weui-input" name="creditCode" placeholder="请输入信用代码"/>
         </view>
-    </view>
+    </view> -->
   </view>
   <view class="weui-cells">
       <view class="weui-cell weui-cell_switch" wx:for="{{stampAttachments}}" wx:key="value">

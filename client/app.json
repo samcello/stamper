@@ -2,12 +2,12 @@
   "pages":[
     "pages/check/check",
     "pages/client/submit/submit",
+    "pages/client/apply/apply",
+    "pages/admin/home/home",
     "pages/start/start",
     "pages/login/login",
-    "pages/admin/home/home",
     "pages/client/home/home",
     "pages/index/index",
-    "pages/client/apply/apply",
     "pages/admin/detail/detail",
     "pages/admin/submit/submit",
     "pages/client/detail/detail"

@@ -19,10 +19,10 @@
                     <view class="weui-form-preview__label">企业名称</view>
                     <view class="weui-form-preview__value">{{item.companyName}}</view>
                 </view>
-                <view class="weui-form-preview__item">
+                <!-- <view class="weui-form-preview__item">
                     <view class="weui-form-preview__label">企业法人</view>
                     <view class="weui-form-preview__value">{{item.legalEntity}}</view>
-                </view>
+                </view> -->
                 <view class="weui-form-preview__item">
                     <view class="weui-form-preview__label">取章方式</view>
                     <view class="weui-form-preview__value">{{item.fetchType}}</view>

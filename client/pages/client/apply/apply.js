@@ -5,26 +5,28 @@ const App = getApp()
 let data = {
   form: {
     companyName: '',
-    legalEntity: '',
-    creditCode: '',
+    // legalEntity: '',
+    // creditCode: '',
     businessLicenseUrl: '',
-    legalIdFrontUrl: '',
-    legalIdBackUrl: '',
+    legalIdUrl: '',
+    // legalIdFrontUrl: '',
+    // legalIdBackUrl: '',
     stampTypes: ''
   },
   stampTypes: [
-    { name: '公章', value: '0', price: '80.00', checked: false },
-    { name: '发票章', value: '1', price: '80.00', checked: false },
-    { name: '财务章', value: '2', price: '50.00', checked: false },
-    { name: '法人章', value: '3', price: '20.00', checked: false },
-    { name: '合同章', value: '4', price: '80.00', checked: false}
+    { name: '法人章', value: '0', price: '20.00', checked: false },
+    { name: '财务专用章', value: '1', price: '30.00', checked: false },
+    { name: '法定名称章', value: '2', price: '80.00', checked: false },
+    { name: '发票专用章', value: '3', price: '80.00', checked: false },
+    { name: '合同专用章', value: '4', price: '80.00', checked: false },
+    
   ],
   stampAttachments: [
-    { label: '营业执照', name: 'businessLicenseUrl', value: '0', sampleUrl: '../../assets/vr.png', url: '' },
-    { label: '法人身份证-正面', name: 'legalIdFrontUrl', value: '1', sampleUrl: '', url: '' },
-    { label: '法人身份证-反面', name: 'legalIdBackUrl', value: '2', sampleUrl: '', url: '' },
-    { label: '委托书', name: 'mandateUrl', value: '3', sampleUrl: '', url: '' },
-    { label: '法人自拍照', name: 'selfieUrl', value: '4', sampleUrl: '', url: ''}
+    { label: '营业执照(副本)扫描件', name: 'businessLicenseUrl', value: '0', sampleUrl: '../../assets/vr.png', url: '' },
+    { label: '法人身份证原件(正反面)', name: 'legalIdUrl', value: '1', sampleUrl: '', url: '' },
+    { label: '法人或经办人自拍照', name: 'selfieUrl', value: '2', sampleUrl: '', url: ''},
+    { label: '委托书', name: 'mandateUrl', value: '3', sampleUrl: '', url: '' },    
+    { label: '其它证明文件', name: 'otherUrl', value: '4', sampleUrl: '', url: '' },    
   ],
   submitted: false
 };
@@ -52,12 +54,12 @@ Page({
       companyName: {
         required: true
       },
-      legalEntity: {
-        required: true
-      },
-      creditCode: {
-        required: true        
-      },
+      // legalEntity: {
+      //   required: true
+      // },
+      // creditCode: {
+      //   required: true        
+      // },
       stampTypes: {
         required: true        
       }
@@ -65,12 +67,12 @@ Page({
         companyName: {
           required: '请输入企业名称',
         },
-        legalEntity: {
-          required: '请输入企业法人',
-        },
-        creditCode: {
-          required: '请输入信用代码',
-        },
+        // legalEntity: {
+        //   required: '请输入企业法人',
+        // },
+        // creditCode: {
+        //   required: '请输入信用代码',
+        // },
         stampTypes: {
           required: '请选择需要刻的章'
         }

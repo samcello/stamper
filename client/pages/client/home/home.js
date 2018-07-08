@@ -61,6 +61,13 @@ Page({
     })
   },
 
+  redirectTo(e) {
+    let orderId = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '/pages/client/detail/detail?orderId=' + orderId
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

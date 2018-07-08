@@ -1,6 +1,7 @@
 <view class="page" bindtap="bindTap" bindtouchstart="bindTouchStart" bindtouchend="bindTouchEnd">
     <view class="page__bd">
         <view class="weui-form-preview" wx:for="{{orders}}" wx:key="value">
+          <view bindtap="redirectTo" data-id="{{item.id}}">
             <view class="weui-form-preview__hd">
                 <view class="weui-form-preview__item">
                     <view class="weui-form-preview__item">
@@ -35,6 +36,7 @@
                     <view class="weui-form-preview__value">{{item.expressInfo}}</view>
                 </view>
             </view>
+          </view>
         </view>
     </view>
     <view class="btn-plus" bindtap="gotoApply">

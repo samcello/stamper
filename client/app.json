@@ -6,10 +6,11 @@
     "pages/login/login",
     "pages/admin/home/home",
     "pages/client/home/home",
-    "pages/client/apply/apply",
     "pages/index/index",
+    "pages/client/apply/apply",
     "pages/admin/detail/detail",
-    "pages/admin/submit/submit"
+    "pages/admin/submit/submit",
+    "pages/client/detail/detail"
   ],
   "window": {
     "navigationBarBackgroundColor": "#479de6",

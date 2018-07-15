@@ -25,8 +25,8 @@ let data = {
     
   ],
   stampAttachments: [
-    { label: '营业执照(副本)扫描件', name: 'businessLicenseUrl', value: '0', sampleUrl: '../../assets/vr.png', url: '' },
-    { label: '法人身份证原件(正反面)', name: 'legalIdUrl', value: '1', sampleUrl: '', url: '' },
+    { label: '营业执照(副本)扫描件', name: 'businessLicenseUrl', value: '0', sampleUrl: 'https://www.itkedian.com/yyzz.jpg', url: '' },
+    { label: '法人身份证原件(正反面)', name: 'legalIdUrl', value: '1', sampleUrl: 'https://www.itkedian.com/id.jpg', url: '' },
     { label: '法人或经办人自拍照', name: 'selfieUrl', value: '2', sampleUrl: '', url: ''},
     { label: '委托书', name: 'mandateUrl', value: '3', sampleUrl: '', url: '' },    
     { label: '其它证明文件', name: 'otherUrl', value: '4', sampleUrl: '', url: '' },    

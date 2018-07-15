@@ -1,0 +1,3 @@
+.weui-cell__bd {
+  font-size: 14px;
+}

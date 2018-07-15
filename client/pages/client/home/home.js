@@ -31,7 +31,7 @@ Page({
         for(let order of res.data) {
           order.createdTime = util.formatTime(new Date(order.createdTime))
           order.fetchType = dict.fetchTypes[order.fetchType]
-          order.orderStatus = dict.orderStatus[order.orderStatus]
+          order.orderStatusText = dict.orderStatus[order.orderStatus]
           order.expressInfo = `${dict.expressCompany[order.expressCompany]}/${order.expressNo}`
         }
         that.setData({
@@ -63,8 +63,10 @@ Page({
 
   redirectTo(e) {
     let orderId = e.currentTarget.dataset.id
+    let status = e.currentTarget.dataset.status
+    if (status != 5 ) return;
     wx.navigateTo({
-      url: '/pages/client/detail/detail?orderId=' + orderId
+      url: '/pages/client/apply/apply?orderId=' + orderId
     })
   },
 

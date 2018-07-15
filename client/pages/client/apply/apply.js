@@ -15,6 +15,7 @@ let data = {
     contractNum: 1,
     minusStatus: 'disabled'
   },
+  order: {},
   stampTypes: [
     { name: '法人章', value: '0', price: '20.00', checked: false },
     { name: '财务专用章', value: '1', price: '30.00', checked: false },
@@ -52,33 +53,55 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const that = this
+    this.orderId = options.orderId
+    if(this.orderId) {
+      wx.request({
+        url: config.service.getOrderUrl,
+        header: {
+          'content-type': 'application/json'
+        },
+        data: { id: that.orderId },
+        success: function (res) {
+          let order = res.data[0] || {}
+          that.order = order
+          let stampTypes = order.stampTypes.split('|')
+          for (let stampType of that.data.stampTypes) {
+            if (stampTypes.includes(stampType.value)) stampType.checked = true
+          }
+          let stampAttachments = [
+            { label: '营业执照(副本)扫描件', name: 'businessLicenseUrl', value: '0', url: order.businessLicenseUrl },
+            { label: '法人身份证原件(正反面)', name: 'legalIdUrl', value: '1', url: order.legalIdUrl },
+            { label: '法人或经办人自拍照', name: 'selfieUrl', value: '2', url: order.selfieUrl },
+            { label: '委托书', name: 'mandateUrl', value: '3', url: order.mandateUrl },
+            { label: '其它证明文件', name: 'otherUrl', value: '4', url: order.mandateUrl },
+          ];
+          that.setData({
+            'form.companyName': order.companyName,
+            'stampTypes': that.data.stampTypes,
+            'form.contractNum': order.contractNum,
+            'stampAttachments': stampAttachments
+          })
+        }
+      })
+    }
+
     this.WxValidate = App.WxValidate({
       companyName: {
         required: true
       },
-      // legalEntity: {
-      //   required: true
-      // },
-      // creditCode: {
-      //   required: true        
-      // },
       stampTypes: {
         required: true        
       }
-    }, {
+    }, 
+    {
         companyName: {
           required: '请输入企业名称',
         },
-        // legalEntity: {
-        //   required: '请输入企业法人',
-        // },
-        // creditCode: {
-        //   required: '请输入信用代码',
-        // },
         stampTypes: {
           required: '请选择需要刻的章'
         }
-      })
+    })
   },
   // 上传图片接口
   doUpload: function (e) {
@@ -178,6 +201,9 @@ Page({
       return result
     },0)
     data['contractNum'] = this.data['form'].contractNum
+    if(this.orderId) {
+      data['order'] = this.order
+    }
     wx.navigateTo({
       url: '/pages/client/submit/submit?stampData='+JSON.stringify(data),
       success: function() {

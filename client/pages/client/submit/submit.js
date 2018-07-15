@@ -19,7 +19,9 @@ Page({
     receiverAddress:"",
     totalPrice: 0,
     submitted: false,
-    region: ["浙江省", "杭州市", "上城区"]
+    region: ["浙江省", "杭州市", "上城区"],
+    receiverName: "",
+    receiverPhone: ""
   },
   preData: {},
 
@@ -73,9 +75,23 @@ Page({
             mask: true,
           })
           const openId = wx.getStorageSync('openId')
-          Object.assign(data, that.preData, { payStatus: 0 }, { userId: openId }, { receiverRegion: data.receiverRegion.join('|') });
+          let requestUrl = null
+          if(that.preData.order) {
+            requestUrl = config.service.updateOrderUrl;
+            Object.assign(data, { id: that.preData.order.id})
+            delete that.preData.order
+          } else {
+            requestUrl = config.service.applyUrl
+          }
+          Object.assign(data, 
+            that.preData, 
+            { payStatus: 0 }, 
+            { userId: openId }, 
+            { receiverRegion: data.receiverRegion.join('|') }, 
+            {orderStatus: 1}
+          );
           wx.request({
-            url: config.service.applyUrl,
+            url: requestUrl,
             data,
             header: {
               'content-type': 'application/json'
@@ -121,11 +137,32 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
     this.preData = JSON.parse(options.stampData)
     this.setData({
       totalPrice: this.preData.totalPrice,
       preData: this.preData
     }) 
+    if(this.preData.order) {
+      const order = this.preData.order
+      this.data.fetchTypes.forEach((fetchType) => {
+        if (fetchType.value === order.fetchType) fetchType.checked = true
+        else fetchType.checked = false
+      })
+      this.data.payTypes.forEach((payType) => {
+        if(payType.value === order.payType) payType.checked = true
+        else payType.checked = false
+      })
+      this.data.receiverRegion = order.receiverRegion.split('|')
+      this.setData({
+        'fetchTypes': this.data.fetchTypes,
+        'payTypes': this.data.payTypes,
+        'receiverAddress': order.receiverAddress,
+        'receiverRegion': this.data.receiverRegion,
+        'receiverName': order.receiverName,
+        'receiverPhone': order.receiverPhone
+      })
+    }
     this.WxValidate = App.WxValidate({
       receiverName: {
         required: true,

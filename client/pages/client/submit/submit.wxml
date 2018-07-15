@@ -20,7 +20,7 @@
           <view class="weui-label">收件人</view>
         </view>
         <view class="weui-cell__bd">
-          <input name="receiverName" class="weui-input" placeholder="请输入收件人姓名" />
+          <input name="receiverName" value="{{receiverName}}" class="weui-input" placeholder="请输入收件人姓名" />
         </view>
       </view>
       <view class="weui-cell weui-cell_input">
@@ -28,7 +28,7 @@
           <view class="weui-label">手机号</view>
         </view>
         <view class="weui-cell__bd">
-          <input name="receiverPhone" class="weui-input" placeholder="请输入收件人手机号" />
+          <input name="receiverPhone" value="{{receiverPhone}}" class="weui-input" placeholder="请输入收件人手机号" />
         </view>
       </view>
 

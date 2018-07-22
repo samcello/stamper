@@ -1,10 +1,10 @@
 {
   "pages":[
-    "pages/client/apply/apply",
     "pages/check/check",
     "pages/client/home/home",
-    "pages/client/detail/detail",
     "pages/admin/home/home",
+    "pages/client/apply/apply",
+    "pages/client/detail/detail",
     "pages/client/submit/submit",
     "pages/start/start",
     "pages/login/login",

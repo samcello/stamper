@@ -1,6 +1,6 @@
 <view class="page" bindtap="bindTap" bindtouchstart="bindTouchStart" bindtouchend="bindTouchEnd">
     <view class="page__bd">
-        <view class="weui-form-preview" wx:for="{{orders}}" wx:key="value">
+        <view class="weui-form-preview" wx:for="{{orders.dataList}}" wx:key="value">
           <view bindtap="redirectTo" data-id="{{item.id}}" data-status="{{item.orderStatus}}">
             <view class="weui-form-preview__hd">
                 <view class="weui-form-preview__item">

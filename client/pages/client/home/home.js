@@ -3,7 +3,12 @@ var util = require('../../../utils/util.js')
 let dict = require('../../../utils/dict.js')
 
 let data = {
-  orders: []
+  orders: {
+    offset: 0,
+    limit: 10,
+    hasMore: false,
+    dataList: []
+  }
 }
 let startTime;
 let endTime;
@@ -19,24 +24,52 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.fetchOrders()
+  },
+
+  fetchOrders() {
     let that = this;
+    wx.showNavigationBarLoading()
     const openId = wx.getStorageSync('openId');
+    const data = {
+      openId,
+      pagination: {
+        limit: that.data.orders.limit,
+        offset: that.data.orders.offset
+      }
+    }
     wx.request({
       url: config.service.getOrdersByUser,
-      data: {openId},
+      data,
       header: {
         'content-type': 'application/json'
       },
       success: function (res) {
-        for(let order of res.data) {
+        for (let order of res.data) {
           order.createdTime = util.formatTime(new Date(order.createdTime))
           order.fetchType = dict.fetchTypes[order.fetchType]
           order.orderStatusText = dict.orderStatus[order.orderStatus]
           order.expressInfo = `${dict.expressCompany[order.expressCompany]}/${order.expressNo}`
         }
+        let hasMore = true
+        let offset = that.data.orders.offset
+        if (res.data.length < that.data.orders.limit) {
+          hasMore = false
+        } else {
+          offset = that.data.orders.offset + that.data.orders.limit
+        }
         that.setData({
-          orders: res.data
+          orders: {
+            limit: that.data.orders.limit,
+            offset,
+            dataList: [...that.data.orders.dataList, ...res.data],
+            hasMore
+          }
         })
+      },
+      complete: function () {
+        wx.hideNavigationBarLoading()
+        wx.stopPullDownRefresh()
       }
     })
   },
@@ -102,14 +135,28 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+    this.setData({
+      orders: {
+        offset: 0,
+        limit: 10,
+        hasMore: false,
+        dataList: []
+      }
+    })
+    this.fetchOrders()
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+    if (this.data.orders.hasMore) {
+      this.fetchOrders()
+    } else {
+      wx.showToast({
+        title: '没有更多数据',
+      })
+    }
   },
 
   /**

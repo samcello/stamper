@@ -17,7 +17,7 @@
             <text class="weui-cell__bd">查看图片</text>
           </view>
           <view class="uploader-text" data-preview-url="{{item.sampleUrl}}" bindtap="previewImg"  wx:if="{{item.sampleUrl}}">
-            <text class="weui-cell__bd">查看样例</text>
+            <text class="weui-cell__bd">样例</text>
           </view>
           <view class="weui-cell__ft">
               <icon class="fa fa-camera" data-attach-type="{{item.value}}" bindtap="doUpload"></icon>
@@ -50,7 +50,9 @@
       <view class="weui-cells weui-cells_after-title">
           <navigator url="/pages/client/other/stamp" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
               <view class="weui-cell__bd">其它专用章</view>
-              <view class="weui-cell__ft weui-cell__ft_in-access">选择</view>
+              <label class="special-stamp-lable" wx:if="{{otherStampSize}}">已选 {{otherStampSize}} 种专用章</label>
+              <view class="weui-cell__ft weui-cell__ft_in-access" wx:if="{{otherStampSize}}">查看</view>
+              <view class="weui-cell__ft weui-cell__ft_in-access" wx:if="{{!otherStampSize}}">选择</view>
           </navigator>
       </view>
   </view>

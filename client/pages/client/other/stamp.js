@@ -49,9 +49,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const selections = options.selections
-    for (let stampType of this.data.otherStampTypes) {
-      stampType.checked = selections.includes(stampType.value)
+    if(App.otherStamps) {
+      const otherStamps = App.otherStamps
+      for (let stampType of this.data.otherStampTypes) {
+        stampType.checked = otherStamps.includes(stampType.value)
+      }
+      this.setData({
+        otherStampTypes: this.data.otherStampTypes
+      })
     }
   },
 

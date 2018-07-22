@@ -73,6 +73,11 @@ Page({
               }
             }
           ).join(', ')
+          order.otherStampTypes = order.otherStampTypes.split('|').map((stampType) => {
+              return dict.otherStampTypes[stampType]
+            }
+          ).join(', ')
+          order.allStampTypes = order.stampTypes + ", " + order.otherStampTypes
           const receiverRegion = order.receiverRegion.split('|').join('');
           order.receiverInfo = `${receiverRegion}${order.receiverAddress}, ${order.receiverName}, ${order.receiverPhone}`
           order.payInfo = `${order.payType} - ${order.payStatus}`

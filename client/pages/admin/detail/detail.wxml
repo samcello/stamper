@@ -41,7 +41,7 @@
           <view class="weui-label">需要刻的章</view>
         </view>
         <view class="weui-cell__bd">
-          <text class="weui-input">{{order.stampTypes}}</text>
+          <text class="weui-input">{{order.allStampTypes}}</text>
         </view>
       </view>
 

@@ -6,6 +6,14 @@ const stampTypes = {
   4: '合同专用章'
 }
 
+const otherStampTypes = {
+  0: '人事专用章',
+  1: '行政专用章',
+  2: '报关专用章',
+  3: '中英文翻译章',
+  4: '质检专用章',
+}
+
 const fetchTypes = {
   0: '快递',
   1: '送货上门'
@@ -47,5 +55,6 @@ module.exports = {
   orderStatus,
   payStatus,
   userType,
-  expressCompany
+  expressCompany,
+  otherStampTypes
 }

@@ -1,5 +1,6 @@
 const config = require('../../../config')
 const util = require('../../../utils/util.js')
+const dict = require('../../../utils/dict.js')
 const App = getApp()
 
 let data = {
@@ -31,7 +32,9 @@ let data = {
     { label: '委托书', name: 'mandateUrl', value: '3', sampleUrl: '', url: '' },    
     { label: '其它证明文件', name: 'otherUrl', value: '4', sampleUrl: '', url: '' },    
   ],
-  submitted: false
+  submitted: false,
+  otherStampTypes:[],
+  otherStampText:''
 };
 
 function updateAttachments(attachType, data, url) {
@@ -76,11 +79,20 @@ Page({
             { label: '委托书', name: 'mandateUrl', value: '3', url: order.mandateUrl },
             { label: '其它证明文件', name: 'otherUrl', value: '4', url: order.mandateUrl },
           ];
+          let otherStampSize = 0;
+          let otherStampTypes = []
+          if (order.otherStampTypes) {
+            otherStampTypes = order.otherStampTypes.split('|')
+            otherStampSize = otherStampTypes.length
+            App.otherStamps = order.otherStampTypes.split('|')
+          }
           that.setData({
             'form.companyName': order.companyName,
             'stampTypes': that.data.stampTypes,
             'form.contractNum': order.contractNum,
-            'stampAttachments': stampAttachments
+            'stampAttachments': stampAttachments,
+            otherStampTypes,
+            otherStampSize
           })
         }
       })
@@ -200,7 +212,11 @@ Page({
       if (steampType.multi === true) result = result + Number(steampType.price) * (this.data['form'].contractNum -1)
       return result
     },0)
+    if (this.data.otherStampTypes && this.data.otherStampTypes.length != 0) {
+      data['totalPrice'] = data['totalPrice'] + 80 * this.data.otherStampTypes.length
+    }
     data['contractNum'] = this.data['form'].contractNum
+    data['otherStampTypes'] = this.data.otherStampTypes.join('|')
     if(this.orderId) {
       data['order'] = this.order
     }
@@ -249,7 +265,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    const otherStamps = App.otherStamps
+    if(otherStamps) {
+      this.setData({
+        otherStampSize: otherStamps.length,
+        otherStampTypes: otherStamps
+      })
+    }
   },
 
   /**

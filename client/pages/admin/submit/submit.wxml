@@ -38,7 +38,7 @@
         </view>
       </view>
     </view>
-    <view wx-if="{{verifyPass}}">
+    <view wx-if="{{verifyPass && order['fetchType']!='1'}}">
       <view class="weui-cells__title">快递公司</view>
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_select">

@@ -30,7 +30,6 @@ Page({
   onTapTag(e) {
     const type = e.currentTarget.dataset.type
     const index = e.currentTarget.dataset.index
-    console.log(index)
     this.setData({
       activeIndex: index,
       'form.activeStatus': type
@@ -76,7 +75,6 @@ Page({
       },
       data: parameters,
       success: function (res) {
-        console.log(res.data)
         for (let order of res.data) {
           order.createdTime = util.formatTime(new Date(order.createdTime))
           order.fetchType = dict.fetchTypes[order.fetchType]

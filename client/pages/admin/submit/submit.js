@@ -41,9 +41,6 @@ Page({
       },
       data: { id: that.orderId },
       success: function (res) {
-        console.log(res.data)
-        console.log('-----')
-        console.log(util.reverse(orderStatusMapping)[res.data[0].orderStatus])
         that.setData({
           order: res.data[0],
           verifyPass: res.data[0].orderStatus != 5,
@@ -82,7 +79,6 @@ Page({
     const data = e.detail.value
     const id = this.orderId
     Object.assign(data, { id }, { orderStatus: orderStatusMapping[this.data.form.orderStatusIndex]}, {expressCompany: this.data.form.expressIndex, payStatus: this.data.form.payStatusIndex });
-    console.log(data);
     this.setData({
       submitted: true
     })

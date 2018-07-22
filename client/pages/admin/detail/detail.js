@@ -48,7 +48,6 @@ Page({
       },
       data: { id: that.orderId},
       success: function (res) {
-        console.log(res.data)
         for (let order of res.data) {
           order.createdTime = util.formatTime(new Date(order.createdTime))
           order.fetchType = dict.fetchTypes[order.fetchType]
@@ -64,8 +63,9 @@ Page({
             { label: '法人自拍照', name: 'selfieUrl', value: '4', url: order.selfieUrl }
           ];
           order.stampTypes = order.stampTypes.split('|').map((stampType) => dict.stampTypes[stampType]).join(', ')
-          order.receiverInfo = `${order.receiverAddress}, ${order.receiverName}, ${order.receiverPhone}`
-          order.payInfo = `${order.payType}${order.payStatus}`
+          const receiverRegion = order.receiverRegion.split('|').join('');
+          order.receiverInfo = `${receiverRegion}${order.receiverAddress}, ${order.receiverName}, ${order.receiverPhone}`
+          order.payInfo = `${order.payType} - ${order.payStatus}`
         }
         that.setData({
           order: res.data[0]
@@ -77,7 +77,6 @@ Page({
   // 预览图片
   previewImg: function (e) {
     const previewUrl = e.currentTarget.dataset.previewUrl
-    console.log(previewUrl);
     wx.previewImage({
       current: previewUrl,
       urls: [previewUrl]
@@ -87,7 +86,6 @@ Page({
     const that = this
     const data = e.detail.value
     const id = this.orderId
-    console.log(data)
 
     if (!this.WxValidate.checkForm(e)) {
       const error = this.WxValidate.errorList[0]

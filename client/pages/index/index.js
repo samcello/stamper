@@ -26,7 +26,6 @@ Page({
       // 调用登录接口
       qcloud.login({
         success(result) {
-          console.log(result);
           wx.setStorageSync('openId', result.openId)
           if (result) {
             util.showSuccess('登录成功');
@@ -174,14 +173,12 @@ Page({
             login: true,
             success (result) {
                 util.showSuccess('请求成功完成')
-                console.log('request success', result)
                 that.setData({
                     requestResult: JSON.stringify(result.data)
                 })
             },
             fail (error) {
                 util.showModel('请求失败', error);
-                console.log('request fail', error);
             }
         }
         if (this.data.takeSession) {  // 使用 qcloud.request 带登录态登录
@@ -212,9 +209,7 @@ Page({
 
                     success: function(res){
                         util.showSuccess('上传图片成功')
-                        console.log(res)
                         res = JSON.parse(res.data)
-                        console.log(res)
                         that.setData({
                             imgUrl: res.data.imgUrl
                         })

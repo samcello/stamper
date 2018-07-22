@@ -7,12 +7,13 @@ const stampTypes = {
 }
 
 const fetchTypes = {
-  0: '自取',
-  1: '快递'
+  0: '快递',
+  1: '送货上门'
 }
 
 const payTypes = {
-  0: '微信'
+  0: '微信',
+  2: '线下支付'
 }
 
 const payStatus = {

@@ -9,8 +9,8 @@ Page({
    */
   data: {
     fetchTypes: [
-      { name: '自取', value: 0, checked: true },
-      { name: '快递', value: 1, checked: false},
+      { name: '快递', value: 0, checked: true },
+      { name: '送货上门', value: 1, checked: false},
     ],
     payTypes: [
       { name: '微信', value: 0, checked: true },
@@ -18,7 +18,8 @@ Page({
     ],
     receiverAddress:"",
     totalPrice: 0,
-    submitted: false
+    submitted: false,
+    region: ["浙江省", "杭州市", "上城区"]
   },
   preData: {},
 
@@ -64,7 +65,7 @@ Page({
       mask: true,
     })
     const openId = wx.getStorageSync('openId')
-    Object.assign(data, this.preData, { payStatus: 0 }, { userId: openId});
+    Object.assign(data, this.preData, { payStatus: 0 }, { userId: openId }, { receiverRegion: data.receiverRegion.join('|')});
     wx.request({
       url: config.service.applyUrl, 
       data,
@@ -89,6 +90,10 @@ Page({
     })
   },
 
+  changeRegin(e) {
+    this.setData({ region: e.detail.value });
+  },
+
   chooseLocation() {
     let that = this
     wx.chooseLocation({
@@ -108,7 +113,6 @@ Page({
       totalPrice: this.preData.totalPrice,
       preData: this.preData
     }) 
-    console.log(this.preData)
     this.WxValidate = App.WxValidate({
       receiverName: {
         required: true,

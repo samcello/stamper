@@ -15,7 +15,6 @@ Page({
     const that = this
     const data = e.detail.value
     const openId = wx.getStorageSync('openId')
-    console.log('openId = ' + openId)
     Object.assign(data, {openId})
     wx.request({
       url: config.service.adminLoginUrl,

@@ -96,9 +96,7 @@ Page({
 
           success: function (res) {
             util.showSuccess('上传图片成功')
-            console.log(res)
             res = JSON.parse(res.data)
-            console.log(res)
             const stampAttachments = updateAttachments(attachType, that.data, res.data.imgUrl);
             that.setData({
               stampAttachments
@@ -120,7 +118,6 @@ Page({
   // 预览图片
   previewImg: function (e) {
     const previewUrl = e.currentTarget.dataset.previewUrl
-    console.log(previewUrl);
     wx.previewImage({
       current: previewUrl,
       urls: [previewUrl]
@@ -148,7 +145,6 @@ Page({
   apply: function(e) {
     const that = this
     const data = e.detail.value
-    console.log(data)
 
     if (!this.WxValidate.checkForm(e)) {
       const error = this.WxValidate.errorList[0]
@@ -166,7 +162,6 @@ Page({
       title: '处理中',
       mask: true,
     })
-    console.log(data);
     var stampAttachments = this.data.stampAttachments
     for (var i = 0, lenI = stampAttachments.length; i < lenI; ++i) {
       if (stampAttachments[i].url !=='')

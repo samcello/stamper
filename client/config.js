@@ -3,7 +3,7 @@
  */
 
 // 此处主机域名修改成腾讯云解决方案分配的域名
-var host = 'https://3wkn7yoo.qcloud.la';
+var host = 'https://277748949.leichaseal.com';
 
 var config = {
 

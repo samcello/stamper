@@ -1,15 +1,17 @@
 {
   "pages":[
     "pages/check/check",
+    "pages/client/home/home",
+    "pages/admin/home/home",
+    "pages/client/apply/apply",
+    "pages/client/detail/detail",
     "pages/client/submit/submit",
     "pages/start/start",
     "pages/login/login",
-    "pages/admin/home/home",
-    "pages/client/home/home",
-    "pages/client/apply/apply",
     "pages/index/index",
     "pages/admin/detail/detail",
-    "pages/admin/submit/submit"
+    "pages/admin/submit/submit",
+    "pages/client/other/stamp"
   ],
   "window": {
     "navigationBarBackgroundColor": "#479de6",

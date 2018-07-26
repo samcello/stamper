@@ -95,7 +95,7 @@ Page({
       method: 'POST',
       success: function (res) {
         setTimeout(() => {
-          wx.navigateTo({
+          wx.redirectTo({
             url: '/pages/admin/home/home',
             success: function () {
               that.setData({

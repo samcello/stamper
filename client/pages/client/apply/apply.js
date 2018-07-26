@@ -1,32 +1,40 @@
 const config = require('../../../config')
 const util = require('../../../utils/util.js')
+const dict = require('../../../utils/dict.js')
 const App = getApp()
 
 let data = {
   form: {
     companyName: '',
-    legalEntity: '',
-    creditCode: '',
+    // legalEntity: '',
+    // creditCode: '',
     businessLicenseUrl: '',
-    legalIdFrontUrl: '',
-    legalIdBackUrl: '',
-    stampTypes: ''
+    legalIdUrl: '',
+    // legalIdFrontUrl: '',
+    // legalIdBackUrl: '',
+    stampTypes: '',
+    contractNum: 1,
+    minusStatus: 'disabled'
   },
+  order: {},
   stampTypes: [
-    { name: '公章', value: '0', price: '80.00', checked: false },
-    { name: '发票章', value: '1', price: '80.00', checked: false },
-    { name: '财务章', value: '2', price: '50.00', checked: false },
-    { name: '法人章', value: '3', price: '20.00', checked: false },
-    { name: '合同章', value: '4', price: '80.00', checked: false}
+    { name: '法人章', value: '0', price: '20.00', checked: false },
+    { name: '财务专用章', value: '1', price: '30.00', checked: false },
+    { name: '法定名称章', value: '2', price: '80.00', checked: false },
+    { name: '发票专用章', value: '3', price: '80.00', checked: false },
+    { name: '合同专用章', value: '4', price: '80.00', checked: false, multi: true },
+    
   ],
   stampAttachments: [
-    { label: '营业执照', name: 'businessLicenseUrl', value: '0', sampleUrl: '../../assets/vr.png', url: '' },
-    { label: '法人身份证-正面', name: 'legalIdFrontUrl', value: '1', sampleUrl: '', url: '' },
-    { label: '法人身份证-反面', name: 'legalIdBackUrl', value: '2', sampleUrl: '', url: '' },
-    { label: '委托书', name: 'mandateUrl', value: '3', sampleUrl: '', url: '' },
-    { label: '法人自拍照', name: 'selfieUrl', value: '4', sampleUrl: '', url: ''}
+    { label: '营业执照(副本)扫描件', name: 'businessLicenseUrl', value: '0', sampleUrl: 'https://www.itkedian.com/yyzz.jpg', url: '' },
+    { label: '法人身份证原件(正反面)', name: 'legalIdUrl', value: '1', sampleUrl: 'https://www.itkedian.com/id.jpg', url: '' },
+    { label: '法人或经办人自拍照', name: 'selfieUrl', value: '2', sampleUrl: '', url: ''},
+    { label: '委托书', name: 'mandateUrl', value: '3', sampleUrl: '', url: '' },    
+    { label: '其它证明文件', name: 'otherUrl', value: '4', sampleUrl: '', url: '' },    
   ],
-  submitted: false
+  submitted: false,
+  otherStampTypes:[],
+  otherStampText:''
 };
 
 function updateAttachments(attachType, data, url) {
@@ -48,33 +56,64 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const that = this
+    this.orderId = options.orderId
+    if(this.orderId) {
+      wx.request({
+        url: config.service.getOrderUrl,
+        header: {
+          'content-type': 'application/json'
+        },
+        data: { id: that.orderId },
+        success: function (res) {
+          let order = res.data[0] || {}
+          that.order = order
+          let stampTypes = order.stampTypes.split('|')
+          for (let stampType of that.data.stampTypes) {
+            if (stampTypes.includes(stampType.value)) stampType.checked = true
+          }
+          let stampAttachments = [
+            { label: '营业执照(副本)扫描件', name: 'businessLicenseUrl', value: '0', url: order.businessLicenseUrl },
+            { label: '法人身份证原件(正反面)', name: 'legalIdUrl', value: '1', url: order.legalIdUrl },
+            { label: '法人或经办人自拍照', name: 'selfieUrl', value: '2', url: order.selfieUrl },
+            { label: '委托书', name: 'mandateUrl', value: '3', url: order.mandateUrl },
+            { label: '其它证明文件', name: 'otherUrl', value: '4', url: order.mandateUrl },
+          ];
+          let otherStampSize = 0;
+          let otherStampTypes = []
+          if (order.otherStampTypes) {
+            otherStampTypes = order.otherStampTypes.split('|')
+            otherStampSize = otherStampTypes.length
+            App.otherStamps = order.otherStampTypes.split('|')
+          }
+          that.setData({
+            'form.companyName': order.companyName,
+            'stampTypes': that.data.stampTypes,
+            'form.contractNum': order.contractNum,
+            'stampAttachments': stampAttachments,
+            otherStampTypes,
+            otherStampSize
+          })
+        }
+      })
+    }
+
     this.WxValidate = App.WxValidate({
       companyName: {
         required: true
       },
-      legalEntity: {
-        required: true
-      },
-      creditCode: {
-        required: true        
-      },
       stampTypes: {
         required: true        
       }
-    }, {
+    }, 
+    {
         companyName: {
           required: '请输入企业名称',
-        },
-        legalEntity: {
-          required: '请输入企业法人',
-        },
-        creditCode: {
-          required: '请输入信用代码',
         },
         stampTypes: {
           required: '请选择需要刻的章'
         }
-      })
+    })
   },
   // 上传图片接口
   doUpload: function (e) {
@@ -170,8 +209,17 @@ Page({
     data['stampTypes'] = data['stampTypes'].join('|')
     data['totalPrice'] = this.data.stampTypes.reduce((result, steampType) => {
       if (steampType.checked) result = result + Number(steampType.price)
+      if (steampType.multi === true) result = result + Number(steampType.price) * (this.data['form'].contractNum -1)
       return result
     },0)
+    if (this.data.otherStampTypes && this.data.otherStampTypes.length != 0) {
+      data['totalPrice'] = data['totalPrice'] + 80 * this.data.otherStampTypes.length
+    }
+    data['contractNum'] = this.data['form'].contractNum
+    data['otherStampTypes'] = this.data.otherStampTypes.join('|')
+    if(this.orderId) {
+      data['order'] = this.order
+    }
     wx.navigateTo({
       url: '/pages/client/submit/submit?stampData='+JSON.stringify(data),
       success: function() {
@@ -181,6 +229,29 @@ Page({
         wx.hideLoading()
       }
     })
+  },
+
+  bindMinus: function () {
+    var contractNum = this.data.form.contractNum;
+    if (contractNum > 1) {
+      contractNum--;
+    }
+    var minusStatus = contractNum <= 1 ? 'disabled' : 'normal';
+    this.setData({
+      'form.contractNum':contractNum,
+      minusStatus
+    });
+  },
+  bindPlus: function () {
+    var contractNum = this.data.form.contractNum;
+    contractNum++;
+    var minusStatus = contractNum < 1 ? 'disabled' : 'normal';
+    this.setData({
+      'form.contractNum':contractNum,
+      minusStatus
+    });
+  },
+  bindManual: function (e) {
   },
 
   /**
@@ -194,7 +265,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    const otherStamps = App.otherStamps
+    if(otherStamps) {
+      this.setData({
+        otherStampSize: otherStamps.length,
+        otherStampTypes: otherStamps
+      })
+    }
   },
 
   /**

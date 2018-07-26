@@ -9,7 +9,8 @@ async function apply(ctx, next) {
 }
 
 async function getAll(ctx, next) {
-  const result = await mysql('orders').select('*').orderBy('createdTime', 'desc')
+  const { pagination } = ctx.query;  
+  const result = await mysql('orders').select('*').limit(pagination.limit).offset(pagination.offset).orderBy('createdTime', 'desc')
   ctx.body = result
 }
 
@@ -20,16 +21,18 @@ async function getOrder(ctx, next) {
 }
 
 async function getOrders(ctx, next) {
-  const { orderStatus, searchText } = ctx.query;
+  let { orderStatus, searchText, pagination } = ctx.query;
+  pagination = JSON.parse(pagination)
+  const {limit, offset} = pagination
   let result = [];
   if (searchText && orderStatus != '99') {
-    result = await mysql('orders').select('*').where({ orderStatus }).andWhere('companyName', 'like', '%' + searchText + '%').orWhere('legalEntity', 'like', '%' + searchText + '%').orderBy('createdTime', 'desc')
+    result = await mysql('orders').select('*').limit(limit).offset(offset).where({ orderStatus }).andWhere('companyName', 'like', '%' + searchText + '%').orWhere('legalEntity', 'like', '%' + searchText + '%').orderBy('createdTime', 'desc')
   } else if(searchText){
-    result = await mysql('orders').select('*').where('companyName', 'like', '%' + searchText + '%').orWhere('legalEntity', 'like', '%' + searchText + '%').orderBy('createdTime', 'desc')
+    result = await mysql('orders').select('*').limit(limit).offset(offset).orWhere('companyName', 'like', '%' + searchText + '%').orWhere('legalEntity', 'like', '%' + searchText + '%').orderBy('createdTime', 'desc')
   } else if (orderStatus != '99'){
-    result = await mysql('orders').select('*').where({ orderStatus }).orderBy('createdTime', 'desc')
+    result = await mysql('orders').select('*').limit(limit).offset(offset).where({ orderStatus }).orderBy('createdTime', 'desc')
   } else {
-    result = await mysql('orders').select('*').orderBy('createdTime', 'desc')
+    result = await mysql('orders').select('*').limit(limit).offset(offset).orderBy('createdTime', 'desc')
   }
   ctx.body = result
 }
@@ -40,8 +43,10 @@ async function updateOrder(ctx, next) {
 }
 
 async function getOrdersByUser(ctx, next) {
-  const { openId } = ctx.query
-  const result = await mysql('orders').select('*').where({ userId: openId}).orderBy('createdTime', 'desc')
+  let { openId, pagination } = ctx.query
+  pagination = JSON.parse(pagination)
+  const { limit, offset } = pagination
+  const result = await mysql('orders').select('*').limit(limit).offset(offset).where({ userId: openId}).orderBy('createdTime', 'desc')
   ctx.body = result
 }
 

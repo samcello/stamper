@@ -22,22 +22,22 @@ Page({
       companyName: {
         required: true
       },
-      legalEntity: {
-        required: true
-      },
-      creditCode: {
-        required: true
-      }
+      // legalEntity: {
+      //   required: true
+      // },
+      // creditCode: {
+      //   required: true
+      // }
     }, {
         companyName: {
           required: '请输入企业名称',
         },
-        legalEntity: {
-          required: '请输入企业法人',
-        },
-        creditCode: {
-          required: '请输入信用代码',
-        }
+        // legalEntity: {
+        //   required: '请输入企业法人',
+        // },
+        // creditCode: {
+        //   required: '请输入信用代码',
+        // }
       })
     const that = this
     this.orderId = options.orderId
@@ -56,13 +56,28 @@ Page({
           order.payType = dict.payTypes[order.payType];
           order.expressInfo = `${dict.expressCompany[order.expressCompany]}/${order.expressNo}`
           order.stampAttachments = [
-            { label: '营业执照', name: 'businessLicenseUrl', value: '0', url: order.businessLicenseUrl },
-            { label: '法人身份证-正面', name: 'legalIdFrontUrl', value: '1', url: order.legalIdFrontUrl },
-            { label: '法人身份证-反面', name: 'legalIdBackUrl', value: '2', url: order.legalIdBackUrl },
-            { label: '委托书', name: 'mandateUrl', value: '3', url: order.mandateUrl },
-            { label: '法人自拍照', name: 'selfieUrl', value: '4', url: order.selfieUrl }
+            { label: '营业执照(副本)扫描件', name: 'businessLicenseUrl', value: '0', url: order.businessLicenseUrl },
+            { label: '法人身份证原件(正反面)', name: 'legalIdUrl', value: '1', url: order.legalIdUrl }, 
+            // { label: '法人身份证-正面', name: 'legalIdFrontUrl', value: '1', url: order.legalIdFrontUrl },
+            // { label: '法人身份证-反面', name: 'legalIdBackUrl', value: '2', url: order.legalIdBackUrl },
+            { label: '法人或经办人自拍照', name: 'selfieUrl', value: '2', url: order.selfieUrl },
+            { label: '委托书', name: 'mandateUrl', value: '3', url: order.mandateUrl },   
+            { label: '其它证明文件', name: 'otherUrl', value: '4', url: order.mandateUrl },            
           ];
-          order.stampTypes = order.stampTypes.split('|').map((stampType) => dict.stampTypes[stampType]).join(', ')
+          order.stampTypes = order.stampTypes.split('|').map((stampType) => 
+            {
+              if (stampType !== '4') {
+                return dict.stampTypes[stampType]
+              }else {
+                return `${dict.stampTypes[stampType]} * ${order.contractNum}`
+              }
+            }
+          ).join(', ')
+          order.otherStampTypes = order.otherStampTypes.split('|').map((stampType) => {
+              return dict.otherStampTypes[stampType]
+            }
+          ).join(', ')
+          order.allStampTypes = order.stampTypes + ", " + order.otherStampTypes
           const receiverRegion = order.receiverRegion.split('|').join('');
           order.receiverInfo = `${receiverRegion}${order.receiverAddress}, ${order.receiverName}, ${order.receiverPhone}`
           order.payInfo = `${order.payType} - ${order.payStatus}`

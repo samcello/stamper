@@ -1,36 +1,23 @@
 <form bindsubmit="apply" bindreset="formReset">
 <view class="page__bd order-apply-form">
   <view class="weui-cells" >
-    <view class="weui-cell weui-cell_input">
+    <view class="weui-cell">
         <view class="weui-cell__hd">
             <view class="weui-label">企业名称</view>
         </view>
         <view class="weui-cell__bd">
-            <input class="weui-input" name="companyName" placeholder="请输入企业名称"/>
-        </view>
-    </view>
-    <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd">
-            <view class="weui-label">企业法人</view>
-        </view>
-        <view class="weui-cell__bd">
-            <input class="weui-input" name="legalEntity" placeholder="请输入企业法人"/>
-        </view>
-    </view>
-    <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd">
-            <view class="weui-label">信用代码</view>
-        </view>
-        <view class="weui-cell__bd">
-            <input class="weui-input" name="creditCode" placeholder="请输入信用代码"/>
+            <input class="weui-input" name="companyName" value="{{form.companyName}}" placeholder="请输入企业名称"/>
         </view>
     </view>
   </view>
-  <view class="weui-cells">
+  <view class="weui-cells ">
       <view class="weui-cell weui-cell_switch" wx:for="{{stampAttachments}}" wx:key="value">
           <view class="weui-cell__bd">{{item.label}}</view>
           <view class="uploader-text" data-preview-url="{{item.url}}" bindtap="previewImg"  wx:if="{{item.url}}">
             <text class="weui-cell__bd">查看图片</text>
+          </view>
+          <view class="uploader-text" data-preview-url="{{item.sampleUrl}}" bindtap="previewImg"  wx:if="{{item.sampleUrl}}">
+            <text class="weui-cell__bd">样例</text>
           </view>
           <view class="weui-cell__ft">
               <icon class="fa fa-camera" data-attach-type="{{item.value}}" bindtap="doUpload"></icon>
@@ -53,8 +40,21 @@
                   <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
               </view>
               <view class="weui-cell__bd">{{item.name}} - ￥{{item.price}}</view>
+              <view class="stepper" wx:if="{{item.value === '4' && item.checked === true}}">
+                <text class="{{minusStatus}}" catchtap="bindMinus">-</text>
+                <label catchtap="bindManual">{{form.contractNum}}</label>
+                <text class="normal" catchtap="bindPlus">+</text>
+              </view>
           </label>
       </checkbox-group>
+      <view class="weui-cells weui-cells_after-title">
+          <navigator url="/pages/client/other/stamp" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+              <view class="weui-cell__bd">其它专用章</view>
+              <label class="special-stamp-lable" wx:if="{{otherStampSize}}">已选 {{otherStampSize}} 种专用章</label>
+              <view class="weui-cell__ft weui-cell__ft_in-access" wx:if="{{otherStampSize}}">查看</view>
+              <view class="weui-cell__ft weui-cell__ft_in-access" wx:if="{{!otherStampSize}}">选择</view>
+          </navigator>
+      </view>
   </view>
   <view class="weui-btn-area">
       <button formType="submit" disabled='{{submitted}}' class="weui-btn" type="primary">下一步</button>

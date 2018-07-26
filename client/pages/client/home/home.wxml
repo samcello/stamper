@@ -1,6 +1,7 @@
 <view class="page" bindtap="bindTap" bindtouchstart="bindTouchStart" bindtouchend="bindTouchEnd">
     <view class="page__bd">
-        <view class="weui-form-preview" wx:for="{{orders}}" wx:key="value">
+        <view class="weui-form-preview" wx:for="{{orders.dataList}}" wx:key="value">
+          <view bindtap="redirectTo" data-id="{{item.id}}" data-status="{{item.orderStatus}}">
             <view class="weui-form-preview__hd">
                 <view class="weui-form-preview__item">
                     <view class="weui-form-preview__item">
@@ -18,23 +19,24 @@
                     <view class="weui-form-preview__label">企业名称</view>
                     <view class="weui-form-preview__value">{{item.companyName}}</view>
                 </view>
-                <view class="weui-form-preview__item">
+                <!-- <view class="weui-form-preview__item">
                     <view class="weui-form-preview__label">企业法人</view>
                     <view class="weui-form-preview__value">{{item.legalEntity}}</view>
-                </view>
+                </view> -->
                 <view class="weui-form-preview__item">
                     <view class="weui-form-preview__label">取章方式</view>
                     <view class="weui-form-preview__value">{{item.fetchType}}</view>
                 </view>
                 <view class="weui-form-preview__item">
                     <view class="weui-form-preview__label">状态</view>
-                    <view class="weui-form-preview__value">{{item.orderStatus}}</view>
+                    <view class="weui-form-preview__value order_status_{{item.orderStatus}}">{{item.orderStatusText}}</view>
                 </view>
                 <view class="weui-form-preview__item" wx-if="{{item.expressCompany}}">
                     <view class="weui-form-preview__label">快递信息</view>
                     <view class="weui-form-preview__value">{{item.expressInfo}}</view>
                 </view>
             </view>
+          </view>
         </view>
     </view>
     <view class="btn-plus" bindtap="gotoApply">

@@ -19,7 +19,7 @@
       <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
     </view>
     <template is="nav" data="{{ navList, activeIndex }}"/>
-    <view class="weui-form-preview" wx:for="{{orders}}" wx:key="value">
+    <view class="weui-form-preview" wx:for="{{orders.dataList}}" wx:key="value">
       <view bindtap="redirectTo" data-id="{{item.id}}">
         <view class="weui-form-preview__hd">
           <view class="weui-form-preview__item">
@@ -38,10 +38,10 @@
             <view class="weui-form-preview__label">企业名称</view>
             <view class="weui-form-preview__value">{{item.companyName}}</view>
           </view>
-          <view class="weui-form-preview__item">
+          <!-- <view class="weui-form-preview__item">
             <view class="weui-form-preview__label">企业法人</view>
             <view class="weui-form-preview__value">{{item.legalEntity}}</view>
-          </view>
+          </view> -->
           <view class="weui-form-preview__item">
             <view class="weui-form-preview__label">取章方式</view>
             <view class="weui-form-preview__value">{{item.fetchType}}</view>

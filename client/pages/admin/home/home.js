@@ -25,47 +25,88 @@ Page({
       { _id: 1, name: '审核中' },
       { _id: 4, name: '已发货' },
       { _id: 5, name: '已退回'},
-    ]
+    ],
+    orders: {
+      offset: 0,
+      limit: 10,
+      hasMore: false,
+      dataList: []
+    }
   },
   onTapTag(e) {
     const type = e.currentTarget.dataset.type
     const index = e.currentTarget.dataset.index
     this.setData({
       activeIndex: index,
-      'form.activeStatus': type
+      'form.activeStatus': type,
+      orders: {
+        offset: 0,
+        limit: 10,
+        hasMore: false,
+        dataList: []
+      }
     })
     this.filterOrders()
   },
   showInput: function () {
     this.setData({
-      inputShowed: true
+      inputShowed: true,
+      orders: {
+        offset: 0,
+        limit: 10,
+        hasMore: false,
+        dataList: []
+      }
     });
   },
   hideInput: function () {
     this.setData({
       'form.searchText': "",
-      inputShowed: false
+      inputShowed: false,
+      orders: {
+        offset: 0,
+        limit: 10,
+        hasMore: false,
+        dataList: []
+      }
     });
     this.filterOrders()    
   },
   clearInput: function () {
     this.setData({
-      'form.searchText': ''
+      'form.searchText': '',
+      orders: {
+        offset: 0,
+        limit: 10,
+        hasMore: false,
+        dataList: []
+      }
     });
     this.filterOrders()
   },
   inputTyping: function (e) {
     this.setData({
-      'form.searchText': e.detail.value
+      'form.searchText': e.detail.value,
+      orders: {
+        offset: 0,
+        limit: 10,
+        hasMore: false,
+        dataList: []
+      }
     });
     this.filterOrders()
   },
 
-  filterOrders() {
+  filterOrders(loadMore) {
     const that = this
+    wx.showNavigationBarLoading()
     const parameters = {
       orderStatus: that.data.form.activeStatus,
-      searchText: that.data.form.searchText
+      searchText: that.data.form.searchText,
+      pagination: {
+        limit: that.data.orders.limit,
+        offset: that.data.orders.offset
+      }
     }
 
     wx.request({
@@ -81,9 +122,26 @@ Page({
           order.orderStatusText = dict.orderStatus[order.orderStatus]
           order.expressInfo = `${dict.expressCompany[order.expressCompany]}/${order.expressNo}`
         }
+        let hasMore = true
+        let offset = that.data.orders.offset
+        if(res.data.length < that.data.orders.limit) {
+          hasMore = false
+        } else {
+          offset = that.data.orders.offset + that.data.orders.limit
+        }
+
         that.setData({
-          orders: res.data
+          orders: {
+            limit: that.data.orders.limit,
+            offset,
+            dataList: loadMore? [...that.data.orders.dataList, ...res.data]: res.data,
+            hasMore
+          }
         })
+      },
+      complete: function () {
+        wx.hideNavigationBarLoading()
+        wx.stopPullDownRefresh()
       }
     })
   },
@@ -134,14 +192,28 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+    this.setData({
+      orders: {
+        offset: 0,
+        limit: 10,
+        hasMore: false,
+        dataList: []
+      }
+    })
+    this.filterOrders()
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+    if (this.data.orders.hasMore) {
+      this.filterOrders(true)
+    } else {
+      wx.showToast({
+        title: '没有更多数据',
+      })
+    }
   },
 
   /**

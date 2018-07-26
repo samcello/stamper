@@ -69,6 +69,8 @@
           </view>
         </label>
       </radio-group>
+       <view class="weui-cells__title">支付宝账号:<text selectable="true" >1038655170@qq.com</text> </view>
+       <view class="weui-cells__title">支付宝名称: 杭州莱洽科技</view>
         <view class="weui-form-preview">
       <view class="weui-form-preview__hd">
         <view class="weui-form-preview__item">

@@ -13,8 +13,8 @@ Page({
       { name: '送货上门', value: 1, checked: false},
     ],
     payTypes: [
-      { name: '微信', value: 0, checked: true },
-      { name: '线下支付', value: 2, checked: false }
+      //{ name: '微信', value: 0, checked: true },
+      { name: '线下支付', value: 2, checked: true }
     ],
     receiverAddress:"",
     totalPrice: 0,

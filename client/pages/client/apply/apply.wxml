@@ -56,6 +56,14 @@
           </navigator>
       </view>
   </view>
+  <view class="weui-form-preview">
+        <view class="weui-form-preview__hd">
+          <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">订单总价</view>
+            <view class="weui-form-preview__value_in-hd">¥ {{ form.totalPrice }}</view>
+          </view>
+        </view>
+      </view>
   <view class="weui-btn-area">
       <button formType="submit" disabled='{{submitted}}' class="weui-btn" type="primary">下一步</button>
   </view>

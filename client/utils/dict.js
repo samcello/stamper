@@ -35,7 +35,8 @@ const orderStatus = {
   2: '审核通过',
   3: '审核未通过',
   4: '已发货',
-  5: '已退回'
+  5: '已退回',
+  6: '已完成'
 }
 
 const expressCompany = {

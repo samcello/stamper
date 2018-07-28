@@ -1,5 +1,4 @@
 <import src="../../common/nav.wxml" />
-
 <view class="page">
   <view class="page__bd">
     <view class="weui-search-bar">

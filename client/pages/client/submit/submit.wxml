@@ -64,20 +64,19 @@
         <label class="weui-cell weui-check__label" wx:for="{{payTypes}}" wx:key="value">
           <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
           <view class="weui-cell__bd">{{item.name}}</view>
-          <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
-            <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+          <view class="weui-cell__ft">
+            <button class="weui-btn" type="primary" size="mini" bindtap="copy">复制</button>
           </view>
         </label>
       </radio-group>
-        <view class="weui-form-preview">
-      <view class="weui-form-preview__hd">
-        <view class="weui-form-preview__item">
-          <view class="weui-form-preview__label">订单总价</view>
-          <view class="weui-form-preview__value_in-hd">¥ {{ totalPrice }}</view>
-        </view>
+    </view>
+    <view class="weui-form-preview">
+    <view class="weui-form-preview__hd">
+      <view class="weui-form-preview__item">
+        <view class="weui-form-preview__label">订单总价</view>
+        <view class="weui-form-preview__value_in-hd">¥ {{ totalPrice }}</view>
       </view>
     </view>
-  
     </view>
     <view class="weui-btn-area">
       <button formType="submit" class="weui-btn" type="primary">提交订单</button>

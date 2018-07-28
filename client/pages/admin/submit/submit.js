@@ -4,7 +4,8 @@ let dict = require('../../../utils/dict.js')
 const App = getApp()
 const orderStatusMapping = {
   0: 4,
-  1: 5
+  1: 5,
+  2: 6
 }
 
 const data = {
@@ -14,7 +15,7 @@ const data = {
     expressIndex: 0,
     comments: ''
   },
-  orderStatus: ['已发货', '已退回'],
+  orderStatus: ['已发货', '已退回', '已完成'],
   payStatus: ['未支付', '已支付'],
   expressCompany: ['顺丰速运'],
   verifyPass: true,

@@ -1,9 +1,9 @@
 {
   "pages":[
     "pages/check/check",
-    "pages/client/home/home",
-    "pages/admin/home/home",
     "pages/client/apply/apply",
+    "pages/admin/home/home",
+    "pages/client/home/home",
     "pages/client/detail/detail",
     "pages/client/submit/submit",
     "pages/start/start",

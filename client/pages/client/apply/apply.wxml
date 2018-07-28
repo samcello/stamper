@@ -41,7 +41,7 @@
               </view>
               <view class="weui-cell__bd">{{item.name}} - ￥{{item.price}}</view>
               <view class="stepper" wx:if="{{item.value === '4' && item.checked === true}}">
-                <text class="{{minusStatus}}" catchtap="bindMinus">-</text>
+                <text class="normal" catchtap="bindMinus">-</text>
                 <label catchtap="bindManual">{{form.contractNum}}</label>
                 <text class="normal" catchtap="bindPlus">+</text>
               </view>

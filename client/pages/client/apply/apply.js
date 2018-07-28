@@ -73,8 +73,8 @@ Page({
             if (stampTypes.includes(stampType.value)) stampType.checked = true
           }
           let stampAttachments = [
-            { label: '营业执照(副本)扫描件', name: 'businessLicenseUrl', value: '0', url: order.businessLicenseUrl },
-            { label: '法人身份证原件(正反面)', name: 'legalIdUrl', value: '1', url: order.legalIdUrl },
+            { label: '营业执照(副本)扫描件', name: 'businessLicenseUrl', value: '0', url: order.businessLicenseUrl, sampleUrl: 'https://www.itkedian.com/yyzz.jpg' },
+            { label: '法人身份证原件(正反面)', name: 'legalIdUrl', value: '1', url: order.legalIdUrl, sampleUrl: 'https://www.itkedian.com/id.jpg' },
             { label: '法人或经办人自拍照', name: 'selfieUrl', value: '2', url: order.selfieUrl },
             { label: '委托书', name: 'mandateUrl', value: '3', url: order.mandateUrl },
             { label: '其它证明文件', name: 'otherUrl', value: '4', url: order.mandateUrl },
@@ -96,6 +96,8 @@ Page({
           })
         }
       })
+    } else {
+      App.otherStamps = []
     }
 
     this.WxValidate = App.WxValidate({

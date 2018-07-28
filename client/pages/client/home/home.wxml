@@ -39,7 +39,7 @@
           </view>
         </view>
     </view>
-    <view class="btn-plus" bindtap="gotoApply">
+    <view class="btn-plus apply-button" bindtap="gotoApply">
         <image class="icon" src="../../../assets/images/iconfont-plus-circle.png" />
         <text>发起刻章申请</text>
     </view>

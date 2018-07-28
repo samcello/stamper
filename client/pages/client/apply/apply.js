@@ -94,6 +94,7 @@ Page({
             otherStampTypes,
             otherStampSize
           })
+          that.calculateTotalPrice()
         }
       })
     } else {

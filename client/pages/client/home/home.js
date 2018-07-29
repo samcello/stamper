@@ -89,6 +89,7 @@ Page({
     this.endTime = e.timeStamp;
   },
   gotoApply() {
+    App.otherStamps = []
     wx.navigateTo({
       url: '/pages/client/apply/apply',
     })

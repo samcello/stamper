@@ -1,6 +1,6 @@
 <form bindsubmit="apply" bindreset="formReset">
 <view class="page__bd order-apply-form">
-  <view class="weui-cells" >
+  <view class="weui-cells " >
     <view class="weui-cell">
         <view class="weui-cell__hd">
             <view class="weui-label">企业名称</view>
@@ -13,11 +13,11 @@
   <view class="weui-cells ">
       <view class="weui-cell weui-cell_switch" wx:for="{{stampAttachments}}" wx:key="value">
           <view class="weui-cell__bd">{{item.label}}</view>
-          <view class="uploader-text" data-preview-url="{{item.url}}" bindtap="previewImg"  wx:if="{{item.url}}">
-            <text class="weui-cell__bd">查看图片</text>
-          </view>
           <view class="uploader-text" data-preview-url="{{item.sampleUrl}}" bindtap="previewImg"  wx:if="{{item.sampleUrl}}">
             <text class="weui-cell__bd">样例</text>
+          </view>
+          <view class="uploader-text" data-preview-url="{{item.url}}" bindtap="previewImg"  wx:if="{{item.url}}">
+            <text class="weui-cell__bd">查看图片</text>
           </view>
           <view class="weui-cell__ft">
               <icon class="fa fa-camera" data-attach-type="{{item.value}}" bindtap="doUpload"></icon>
@@ -41,7 +41,7 @@
               </view>
               <view class="weui-cell__bd">{{item.name}} - ￥{{item.price}}</view>
               <view class="stepper" wx:if="{{item.value === '4' && item.checked === true}}">
-                <text class="{{minusStatus}}" catchtap="bindMinus">-</text>
+                <text class="normal" catchtap="bindMinus">-</text>
                 <label catchtap="bindManual">{{form.contractNum}}</label>
                 <text class="normal" catchtap="bindPlus">+</text>
               </view>
@@ -56,6 +56,14 @@
           </navigator>
       </view>
   </view>
+  <view class="weui-form-preview">
+        <view class="weui-form-preview__hd">
+          <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">订单总价</view>
+            <view class="weui-form-preview__value_in-hd">¥ {{ form.totalPrice }}</view>
+          </view>
+        </view>
+      </view>
   <view class="weui-btn-area">
       <button formType="submit" disabled='{{submitted}}' class="weui-btn" type="primary">下一步</button>
   </view>

@@ -13,18 +13,18 @@ Page({
       { name: '送货上门', value: 1, checked: false},
     ],
     payTypes: [
-      //{ name: '微信', value: 0, checked: true },
-      { name: '线下支付', value: 2, checked: true }
+      // { name: '微信', value: 0, checked: true },
+      { name: '支付宝: 1038655170@qq.com 杭州来洽科技', value: 2, checked: true }
     ],
     receiverAddress:"",
     totalPrice: 0,
     submitted: false,
     region: ["浙江省", "杭州市", "上城区"],
     receiverName: "",
-    receiverPhone: ""
+    receiverPhone: "",
+    aliAccount: '1038655170@qq.com'
   },
   preData: {},
-
   fetchTypeChange: function (e) {
     var fetchTypes = this.data.fetchTypes;
     for (var i = 0, len = fetchTypes.length; i < len; ++i) {
@@ -185,6 +185,14 @@ Page({
           required: '请输入收件人地址',
         },
       })
+  },
+  copy(){
+    var that = this;
+    wx.setClipboardData({
+      data: that.data.aliAccount,
+      success: function (res) {
+      }
+    });
   },
 
   /**

@@ -94,8 +94,11 @@ Page({
             otherStampTypes,
             otherStampSize
           })
+          that.calculateTotalPrice()
         }
       })
+    } else {
+      App.otherStamps = []
     }
 
     this.WxValidate = App.WxValidate({
@@ -179,6 +182,7 @@ Page({
     this.setData({
       stampTypes
     });
+    this.calculateTotalPrice()
   },
 
   apply: function(e) {
@@ -207,16 +211,9 @@ Page({
         data[stampAttachments[i].name] = stampAttachments[i].url
     }
     data['stampTypes'] = data['stampTypes'].join('|')
-    data['totalPrice'] = this.data.stampTypes.reduce((result, steampType) => {
-      if (steampType.checked) result = result + Number(steampType.price)
-      if (steampType.multi === true) result = result + Number(steampType.price) * (this.data['form'].contractNum -1)
-      return result
-    },0)
-    if (this.data.otherStampTypes && this.data.otherStampTypes.length != 0) {
-      data['totalPrice'] = data['totalPrice'] + 80 * this.data.otherStampTypes.length
-    }
     data['contractNum'] = this.data['form'].contractNum
     data['otherStampTypes'] = this.data.otherStampTypes.join('|')
+    data['totalPrice'] = this.data['form'].totalPrice
     if(this.orderId) {
       data['order'] = this.order
     }
@@ -241,6 +238,7 @@ Page({
       'form.contractNum':contractNum,
       minusStatus
     });
+    this.calculateTotalPrice()
   },
   bindPlus: function () {
     var contractNum = this.data.form.contractNum;
@@ -250,7 +248,23 @@ Page({
       'form.contractNum':contractNum,
       minusStatus
     });
+    this.calculateTotalPrice()
   },
+  calculateTotalPrice() {
+    let totalPrice = this.data.stampTypes.reduce((result, steampType) => {
+      if (steampType.checked) result = result + Number(steampType.price)
+      if (steampType.multi === true) result = result + Number(steampType.price) * (this.data['form'].contractNum - 1)
+      return result
+    }, 0)
+
+    if (this.data.otherStampTypes && this.data.otherStampTypes.length != 0) {
+      totalPrice += 80 * this.data.otherStampTypes.length
+    }
+    this.setData({
+      'form.totalPrice': totalPrice
+    })
+  },
+
   bindManual: function (e) {
   },
 
@@ -272,6 +286,7 @@ Page({
         otherStampTypes: otherStamps
       })
     }
+    this.calculateTotalPrice()
   },
 
   /**

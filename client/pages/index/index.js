@@ -22,58 +22,40 @@ Page({
     login: function () {
       util.showBusy('正在登录')
       var that = this
-
       // 调用登录接口
-      qcloud.login({
+      wx.login({
         success(result) {
-          wx.setStorageSync('openId', result.openId)
-          if (result) {
-            util.showSuccess('登录成功');
-            that.setData({
-              userInfo: result,
-              logged: true
-            })
-            const openId = result.openId;
-            wx.request({
-              url: config.service.getUserUrl,
-              data: { openId },
-              header: {
-                'content-type': 'application/json'
-              },
-              method: 'POST',
-              success: function (res) {
-                if (res.data[0] && res.data[0].roles === "0") {
-                  wx.redirectTo({
-                    url: '/pages/admin/home/home',
-                  })
-                } else {
-                  wx.redirectTo({
-                    url: '/pages/client/home/home',
-                  })
+          wx.request({
+            url: config.service.getOpenId,
+            data: { code: result.code },
+            method: 'POST',
+            success: function (res) {
+              wx.setStorageSync('openId', res.body);
+              const openId = res.body;
+              wx.request({
+                url: config.service.getUserUrl,
+                data: { openId },
+                header: {
+                  'content-type': 'application/json'
+                },
+                method: 'POST',
+                success: function (res) {
+                  if (res.data[0] && res.data[0].roles === "0") {
+                    wx.redirectTo({
+                      url: '/pages/admin/home/home',
+                    })
+                  } else {
+                    wx.redirectTo({
+                      url: '/pages/client/home/home',
+                    })
+                  }
                 }
-              }
-            })
+              })
+            },
+            fail: function(res){
 
-
-          } else {
-            // 如果不是首次登录，不会返回用户信息，请求用户信息接口获取
-            qcloud.request({
-              url: config.service.requestUrl,
-              login: true,
-              success(result) {
-                util.showSuccess('登录成功')
-                that.setData({
-                  userInfo: result.data.data,
-                  logged: true
-                })
-              },
-
-              fail(error) {
-                util.showModel('请求失败', error)
-                console.log('request fail', error)
-              }
-            })
-          }
+            }
+          })
         },
 
         fail(error) {

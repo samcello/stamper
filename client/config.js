@@ -3,7 +3,8 @@
  */
 
 // 此处主机域名修改成腾讯云解决方案分配的域名
-var host = 'https://277748949.leichaseal.com';
+//https://312023381.leichaseal.com
+var host = 'https://3wkn7yoo.qcloud.la';
 
 var config = {
 
@@ -33,6 +34,7 @@ var config = {
         getUserUrl: `${host}/weapp/user`,
         adminLoginUrl: `${host}/weapp/admin/login`,
         getOrdersByUser: `${host}/weapp/user/orders`,
+        getOpenId: `${host}/weapp/openid`,
     }
 };
 

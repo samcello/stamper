@@ -26,8 +26,8 @@ let data = {
     
   ],
   stampAttachments: [
-    { label: '营业执照(副本)扫描件', name: 'businessLicenseUrl', value: '0', sampleUrl: 'https://www.itkedian.com/yyzz.jpg', url: '' },
-    { label: '法人身份证原件(正反面)', name: 'legalIdUrl', value: '1', sampleUrl: 'https://www.itkedian.com/id.jpg', url: '' },
+    { label: '营业执照(副本)扫描件', name: 'businessLicenseUrl', value: '0', sampleUrl: '', url: '' },
+    { label: '法人身份证原件(正反面)', name: 'legalIdUrl', value: '1', sampleUrl: '', url: '' },
     { label: '法人或经办人自拍照', name: 'selfieUrl', value: '2', sampleUrl: '', url: ''},
     { label: '委托书', name: 'mandateUrl', value: '3', sampleUrl: '', url: '' },    
     { label: '其它证明文件', name: 'otherUrl', value: '4', sampleUrl: '', url: '' },    
@@ -73,8 +73,8 @@ Page({
             if (stampTypes.includes(stampType.value)) stampType.checked = true
           }
           let stampAttachments = [
-            { label: '营业执照(副本)扫描件', name: 'businessLicenseUrl', value: '0', url: order.businessLicenseUrl, sampleUrl: 'https://www.itkedian.com/yyzz.jpg' },
-            { label: '法人身份证原件(正反面)', name: 'legalIdUrl', value: '1', url: order.legalIdUrl, sampleUrl: 'https://www.itkedian.com/id.jpg' },
+            { label: '营业执照(副本)扫描件', name: 'businessLicenseUrl', value: '0', url: order.businessLicenseUrl, sampleUrl: '' },
+            { label: '法人身份证原件(正反面)', name: 'legalIdUrl', value: '1', url: order.legalIdUrl, sampleUrl: '' },
             { label: '法人或经办人自拍照', name: 'selfieUrl', value: '2', url: order.selfieUrl },
             { label: '委托书', name: 'mandateUrl', value: '3', url: order.mandateUrl },
             { label: '其它证明文件', name: 'otherUrl', value: '4', url: order.mandateUrl },
@@ -89,7 +89,7 @@ Page({
           that.setData({
             'form.companyName': order.companyName,
             'stampTypes': that.data.stampTypes,
-            'form.contractNum': order.contractNum,
+           //      'form.contractNum': order.contractNum,
             'stampAttachments': stampAttachments,
             otherStampTypes,
             otherStampSize
@@ -211,7 +211,7 @@ Page({
         data[stampAttachments[i].name] = stampAttachments[i].url
     }
     data['stampTypes'] = data['stampTypes'].join('|')
-    data['contractNum'] = this.data['form'].contractNum
+    //data['contractNum'] = this.data['form'].contractNum
     data['otherStampTypes'] = this.data.otherStampTypes.join('|')
     data['totalPrice'] = this.data['form'].totalPrice
     if(this.orderId) {

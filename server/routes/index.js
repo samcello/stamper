@@ -40,4 +40,7 @@ router.post('/order/update', controllers.orders.updateOrder)
 router.post('/user', controllers.userInfo.getUser)
 router.post('/admin/login', controllers.userInfo.login)
 router.get('/user/orders', controllers.orders.getOrdersByUser)
+router.get('/openid', controllers.openid)
+
+
 module.exports = router
